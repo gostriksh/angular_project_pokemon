@@ -5,10 +5,14 @@ import {Stat} from './Stat';
 export class Pokemon implements IPokemon {
     public name: string;
     public stats: IStat;
+    public imgFront: string;
+    public imgBack: string;
 
-    constructor(name, stats) {
+    constructor(name, stats, imgFront, imgBack) {
         this.name = name;
         this.stats = stats;
+        this.imgFront = imgFront;
+        this.imgBack = imgBack;
     }
 
     static factoryFromData(data: any): Pokemon {
@@ -16,6 +20,8 @@ export class Pokemon implements IPokemon {
         const attackStat = data.stats.find(s => s.stat.name === 'attack');
         const defenseStat = data.stats.find(s => s.stat.name === 'defense');
         const healthStat = data.stats.find(s => s.stat.name === 'hp');
+        const imgFront = data.sprites.front_default;
+        const imgBack = data.sprites.back_default;
 
         const stat = new Stat(
             speedStat ? speedStat.base_stat : 0,
@@ -24,6 +30,6 @@ export class Pokemon implements IPokemon {
             healthStat ? healthStat.base_stat : 0
         );
 
-        return new Pokemon(data.name, stat);
+        return new Pokemon(data.name, stat, imgFront, imgBack);
     }
 }

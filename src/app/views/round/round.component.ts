@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {first} from 'rxjs/operators';
+import {first, map, switchAll, switchMap} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-round',
@@ -9,17 +10,34 @@ import {first} from 'rxjs/operators';
     styleUrls: ['./round.component.sass']
 })
 export class RoundComponent implements OnInit {
-    private pokemon: IPokemon;
+    public pokemonFront: IPokemon;
+    public pokemonBack: IPokemon;
 
-    constructor(private pokemonService: PokemonService) {
+    constructor(private pokemonService: PokemonService,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.pokemonService.show('pikachu')
-            .pipe(
-                first(p => this.pokemon = p)
-            )
+        this.route.paramMap.pipe(
+            map(this.fetchPokemons.bind(this))
+        )
             .subscribe();
     }
 
+    private fetchPokemons(params): void {
+        const pokemonFrontName = params.get('pokemonFront');
+        const pokemonBackName = params.get('pokemonBack');
+
+        this.pokemonService.show(pokemonFrontName)
+            .pipe(
+                first(p => this.pokemonFront = p)
+            )
+            .subscribe();
+
+        this.pokemonService.show(pokemonBackName)
+            .pipe(
+                first(p => this.pokemonBack = p)
+            )
+            .subscribe();
+    }
 }
