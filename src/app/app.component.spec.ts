@@ -23,13 +23,13 @@ describe('AppComponent', () => {
   it(`should have as title 'pokemon'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('pokemon');
+    expect(app.title).toEqual('Pokemon ESGI');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to pokemon!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to Pokemon ESGI!');
   });
 });
