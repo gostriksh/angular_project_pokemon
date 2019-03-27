@@ -10,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {SelectionComponent} from './views/selection/selection.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AttackSelectionComponent} from './views/attackSelection/attackSelection.component';
+import {AttackColorDirective} from './core/directive/attack-color.directive';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import {AttackSelectionComponent} from './views/attackSelection/attackSelection.
         RoundComponent,
         AttackSelectionComponent,
         PokemonComponent,
-        SelectionComponent
+        SelectionComponent,
+        AttackColorDirective
     ],
     imports: [
         BrowserModule,
