@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {first, map, switchAll, switchMap} from 'rxjs/operators';
+import {concat, first, map, switchAll, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Observable, OperatorFunction} from "rxjs";
 
 @Component({
     selector: 'app-round',
@@ -19,26 +20,26 @@ export class RoundComponent implements OnInit {
 
     ngOnInit() {
         this.route.paramMap.pipe(
-            map(this.fetchPokemons.bind(this))
+            switchMap(this.fetchPokemons.bind(this))
         )
             .subscribe();
     }
 
-    private fetchPokemons(params): void {
+    private fetchPokemons(params): OperatorFunction<{}, any> {
         const pokemonFrontName = params.get('pokemonFront');
         const pokemonBackName = params.get('pokemonBack');
 
-        this.pokemonService.show(pokemonFrontName)
+        const front$ = this.pokemonService.show(pokemonFrontName)
             .pipe(
                 first(p => this.pokemonFront = p)
-            )
-            .subscribe();
+            );
 
-        this.pokemonService.show(pokemonBackName)
+        const back$ = this.pokemonService.show(pokemonBackName)
             .pipe(
                 first(p => this.pokemonBack = p)
-            )
-            .subscribe();
+            );
+
+        return concat(front$, back$);
     }
 
     private getAttackOrder(... pokemons: IPokemon[]): IPokemon[] {
