@@ -7,6 +7,7 @@ import {Stat} from '../models/Stat';
 
 @Injectable()
 export class PokemonService {
+
     constructor(private http: HttpClient) {
     }
 
@@ -14,5 +15,10 @@ export class PokemonService {
         return this.http
             .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
             .pipe(map((data: any) => Pokemon.factoryFromData(data)));
+    }
+
+    public getAttackDetail(uri: string): Observable<any> {
+        return this.http
+            .get(`${uri}`);
     }
 }

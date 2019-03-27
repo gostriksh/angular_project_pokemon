@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
 import {first, map, switchAll, switchMap} from 'rxjs/operators';
@@ -30,14 +30,19 @@ export class RoundComponent implements OnInit {
 
         this.pokemonService.show(pokemonFrontName)
             .pipe(
-                first(p => this.pokemonFront = p)
-            )
+                first(p => {
+                    this.pokemonFront = p;
+                    console.log(this.pokemonFront);
+                }))
             .subscribe();
 
         this.pokemonService.show(pokemonBackName)
             .pipe(
-                first(p => this.pokemonBack = p)
-            )
+                first(p => {
+                    this.pokemonBack = p;
+                    console.log(this.pokemonBack);
+                }))
             .subscribe();
     }
+
 }

@@ -1,18 +1,21 @@
 import {IStat} from '../interfaces/IStat';
 import {IPokemon} from '../interfaces/IPokemon';
 import {Stat} from './Stat';
+import {IRedirection} from '../interfaces/common/IRedirection';
 
 export class Pokemon implements IPokemon {
     public name: string;
     public stats: IStat;
     public imgFront: string;
     public imgBack: string;
+    public moves: Array<IRedirection>;
 
-    constructor(name, stats, imgFront, imgBack) {
+    constructor(name, stats, imgFront, imgBack, moves) {
         this.name = name;
         this.stats = stats;
         this.imgFront = imgFront;
         this.imgBack = imgBack;
+        this.moves = moves;
     }
 
     static factoryFromData(data: any): Pokemon {
@@ -30,6 +33,6 @@ export class Pokemon implements IPokemon {
             healthStat ? healthStat.base_stat : 0
         );
 
-        return new Pokemon(data.name, stat, imgFront, imgBack);
+        return new Pokemon(data.name, stat, imgFront, imgBack, data.moves);
     }
 }
