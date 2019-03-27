@@ -25,7 +25,7 @@ export class RoundComponent implements OnInit {
             .subscribe();
     }
 
-    private fetchPokemons(params): OperatorFunction<{}, any> {
+    private fetchPokemons(params): Observable<any> {
         const pokemonFrontName = params.get('pokemonFront');
         const pokemonBackName = params.get('pokemonBack');
 
@@ -39,6 +39,6 @@ export class RoundComponent implements OnInit {
                 first(p => this.pokemonBack = p)
             );
 
-        return concat(front$, back$);
+        return front$.pipe(concat(back$));
     }
 }
