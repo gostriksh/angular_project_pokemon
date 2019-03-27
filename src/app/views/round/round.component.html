@@ -1,10 +1,12 @@
-<div>
-  
-  <div>
-    <img src={{pokemonBack?.imgBack}} alt="">
+<div id="battle-div">
+  <p class="pokemon-name" id="pokemon-front-name">{{pokemonFront?.name}}</p>
+  <div id="ground">
+    <div class="pokemon-div" id="pokemon-front">
+      <img src={{pokemonFront?.imgFront}} alt="">
+    </div>
+    <div class="pokemon-div" id="pokemon-back">
+      <img src={{pokemonBack?.imgBack}} alt="">
+    </div>
   </div>
-  <div>
-    <img src={{pokemonFront?.imgFront}} alt="">
-  </div>
-
+  <p class="pokemon-name" id="pokemon-back-name">{{pokemonBack?.name}}</p>
 </div>
