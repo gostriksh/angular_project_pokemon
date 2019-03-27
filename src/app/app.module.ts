@@ -9,17 +9,19 @@ import {PokemonService} from './core/services/pokemon.service';
 import {HttpClientModule} from '@angular/common/http';
 import {SelectionComponent} from './views/selection/selection.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { AttackColorDirective } from './core/directive/attack-color.directive';
+import { ScrollFocusBottomDirective } from './core/directive/scroll-focus-bottom.directive';
 import {AttackSelectionComponent} from './views/attackSelection/attackSelection.component';
-import {AttackColorDirective} from './core/directive/attack-color.directive';
 
 @NgModule({
     declarations: [
         AppComponent,
         RoundComponent,
-        AttackSelectionComponent,
         PokemonComponent,
+        AttackSelectionComponent,
         SelectionComponent,
-        AttackColorDirective
+        AttackColorDirective,
+        ScrollFocusBottomDirective
     ],
     imports: [
         BrowserModule,

@@ -1,9 +1,21 @@
 #battle-div
-  margin: 60px auto
+  margin: auto
   width: 650px
+  #win-msg
+    position: absolute
+    left: 50%
+    top: 50%
+    -webkit-transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%)
+    font-size: 32px
+    width: 90%
+    text-align: center
+    text-transform: uppercase
+    font-weight: bold
   .pokemon-name
     font-size: 23px
     text-transform: uppercase
+    display: block
   #pokemon-front-name
     text-align: right
     margin-right: 50px
@@ -11,6 +23,7 @@
     text-align: left
     margin-left: 50px
   #ground
+    position: relative
     background-image: url("http://i635.photobucket.com/albums/uu74/PocketmonmMaster/1_zps5e1a5a12.png")
     background-repeat: no-repeat
     background-size: cover
@@ -18,6 +31,14 @@
     overflow: hidden
     .pokemon-div
       height: 50%
+      .is-dead
+        transform: rotate(90deg)
+        -webkit-transition: opacity 1s ease-in-out
+        -moz-transition: opacity 1s ease-in-out
+        -ms-transition: opacity 1s ease-in-out
+        -o-transition: opacity 1s ease-in-out
+        transition: opacity 1s ease-in-out
+        opacity: 0
       img
         width: 200px
     #pokemon-front
@@ -28,14 +49,15 @@
       img
         float: left
         margin-left: 50px
-.is-dead
-  transform: rotate(90deg)
-  -webkit-transition: opacity 1s ease-in-out
-  -moz-transition: opacity 1s ease-in-out
-  -ms-transition: opacity 1s ease-in-out
-  -o-transition: opacity 1s ease-in-out
-  transition: opacity 1s ease-in-out
-  opacity: 0
 
+#log-div
+  margin: 30px auto
+  width: 650px
+  height: 200px
+  overflow: scroll
+  overflow-x: hidden
+#pause
+  display: block
+  margin: auto
 
 
