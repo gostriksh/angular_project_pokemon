@@ -1,21 +1,22 @@
-<div id="battle-div">
+<div id="battle-div" *ngIf="pokemonFront && pokemonBack">
   <p class="pokemon-name" id="pokemon-front-name">{{pokemonFront?.name}} {{pokemonFront?.stats.health}}</p>
   <div id="ground">
     <div class="pokemon-div" id="pokemon-front">
-      <img src={{pokemonFront?.imgFront}} alt="">
+      <img [ngClass]="{'is-dead': pokemonFront?.stats.health <= 0}" src={{pokemonFront?.imgFront}} alt="">
     </div>
     <div class="pokemon-div" id="pokemon-back">
-      <img src={{pokemonBack?.imgBack}} alt="">
+      <img [ngClass]="{'is-dead': pokemonBack?.stats.health <= 0}" src={{pokemonBack?.imgBack}} alt="">
     </div>
   </div>
   <p class="pokemon-name" id="pokemon-back-name">{{pokemonBack?.name}} {{pokemonBack?.stats.health}}</p>
+  <button (click)="setPause()">{{pause ? 'Resume' : 'Pause'}}</button>
 </div>
 
 <div>
   <p *ngIf="winner">
     The winner is ... {{winner?.name}}
   </p>
-  <p *ngFor="let log of logs">
-    {{log}}
+  <p *ngFor="let log of logs" [appAttackColor]="log.pokemon === pokemonFront ? pokemonFrontColor : pokemonBackColor">
+    {{log.value}}
   </p>
 </div>
