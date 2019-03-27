@@ -40,4 +40,13 @@ export class RoundComponent implements OnInit {
             )
             .subscribe();
     }
+
+    private getAttackOrder(... pokemons: IPokemon[]): IPokemon[] {
+        return pokemons.sort((a, b) => a.stats.speed > b.stats.speed ? -1 : 1);
+    }
+
+    private fight(): void {
+        const pokemons = this.getAttackOrder(this.pokemonFront, this.pokemonBack)
+        return;
+    }
 }
