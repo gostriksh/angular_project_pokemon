@@ -1,5 +1,5 @@
 <div id="battle-div">
-  <p class="pokemon-name" id="pokemon-front-name">{{pokemonFront?.name}}</p>
+  <p class="pokemon-name" id="pokemon-front-name">{{pokemonFront?.name}} {{pokemonFront?.stats.health}}</p>
   <div id="ground">
     <div class="pokemon-div" id="pokemon-front">
       <img src={{pokemonFront?.imgFront}} alt="">
@@ -8,5 +8,14 @@
       <img src={{pokemonBack?.imgBack}} alt="">
     </div>
   </div>
-  <p class="pokemon-name" id="pokemon-back-name">{{pokemonBack?.name}}</p>
+  <p class="pokemon-name" id="pokemon-back-name">{{pokemonBack?.name}} {{pokemonBack?.stats.health}}</p>
+</div>
+
+<div>
+  <p *ngIf="winner">
+    The winner is ... {{winner?.name}}
+  </p>
+  <p *ngFor="let log of logs">
+    {{log}}
+  </p>
 </div>
