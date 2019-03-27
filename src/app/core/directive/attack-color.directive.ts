@@ -1,11 +1,11 @@
 import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
 
 @Directive({
-  selector: '[appAttackColor]'
+  selector: '[appPokemonColor]'
 })
 export class AttackColorDirective implements OnChanges {
 
-  @Input('appAttackColor') color: string;
+  @Input('appPokemonColor') color: string;
 
   constructor(private el: ElementRef) { }
 
