@@ -10,8 +10,8 @@ const routes: Routes = [
         component: SelectionComponent
     },
     {
-      path: 'selection/attacks',
-      component: AttackSelectionComponent
+        path: 'attacks/pokemonFront/:pokemonFront/pokemonBack/:pokemonBack',
+        component: AttackSelectionComponent
     },
     {
         path: 'round/pokemonFront/:pokemonFront/pokemonBack/:pokemonBack',

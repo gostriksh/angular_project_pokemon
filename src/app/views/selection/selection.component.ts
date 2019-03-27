@@ -23,6 +23,6 @@ export class SelectionComponent implements OnInit {
         const pokemonFront = this.form.value.pokemonFront;
         const pokemonBack = this.form.value.pokemonBack;
 
-        this.router.navigate(['round', 'pokemonFront', pokemonFront, 'pokemonBack', pokemonBack]);
+        this.router.navigate(['selection', 'attacks', 'pokemonFront', pokemonFront, 'pokemonBack', pokemonBack]);
     }
 }

@@ -1,3 +1,30 @@
-<p>
-  pokemon works!
-</p>
+<div class="attack-selector">
+
+    <div class="front-pokemon">
+        <div class="pokemon-attacks">
+            <img src={{pokemonFront?.imgFront}} alt="Front pokemon">
+            <h2 class="pokemon-titles">{{pokemonFront?.name}} attacks</h2>
+            <ul class="front-pokemon-attacks">
+                <li *ngFor="let frontAttack of pokemonFrontAttacks" (click)="onSelect(frontAttack.move.name)">
+                    <span class="attack">{{frontAttack.move.name}}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="attacks-selected">
+
+        </div>
+
+
+    </div>
+
+    <div class="pokemon-attacks">
+        <img src={{pokemonBack?.imgFront}} alt="Back pokemon">
+        <h2 class="pokemon-titles">{{pokemonBack?.name}} attacks</h2>
+        <ul class="front-pokemon-attacks">
+            <li *ngFor="let backAttack of pokemonBackAttacks" (click)="onSelect(backAttack.move.name)">
+                <span class="attack">{{backAttack.move.name}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
