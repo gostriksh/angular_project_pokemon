@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { AttackColorDirective } from './core/directive/attack-color.directive';
 import { ScrollFocusBottomDirective } from './core/directive/scroll-focus-bottom.directive';
 import {AttackSelectionComponent} from './views/attackSelection/attackSelection.component';
+import { HealthBarDirective } from './core/directive/health-bar.directive';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import {AttackSelectionComponent} from './views/attackSelection/attackSelection.
         AttackSelectionComponent,
         SelectionComponent,
         AttackColorDirective,
-        ScrollFocusBottomDirective
+        ScrollFocusBottomDirective,
+        HealthBarDirective
     ],
     imports: [
         BrowserModule,

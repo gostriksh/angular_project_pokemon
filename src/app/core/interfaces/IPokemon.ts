@@ -6,5 +6,6 @@ export interface IPokemon {
   stats: IStat;
   imgFront: string;
   imgBack: string;
+  img: string;
   moves: Array<IRedirection>;
 }

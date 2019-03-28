@@ -12,16 +12,8 @@
     text-align: center
     text-transform: uppercase
     font-weight: bold
-  .pokemon-name
-    font-size: 23px
-    text-transform: uppercase
-    display: block
-  #pokemon-front-name
-    text-align: right
-    margin-right: 50px
-  #pokemon-back-name
-    text-align: left
-    margin-left: 50px
+    margin: 0
+
   #ground
     position: relative
     background-image: url("http://i635.photobucket.com/albums/uu74/PocketmonmMaster/1_zps5e1a5a12.png")
@@ -30,7 +22,42 @@
     height: 300px
     overflow: hidden
     .pokemon-div
+      position: relative
       height: 50%
+      .pokemon-info
+        width: 150px
+        height: 50px
+        background-color: white
+        border-radius: 10px
+        border: solid dimgrey 1px
+        position: absolute
+        .health-bar-border
+          width: 120px
+          height: 10px
+          border-radius: 5px
+          border: solid dimgrey 1px
+          margin: auto
+          .health-bar
+            width: 120px
+            height: 10px
+            background-color: greenyellow
+            float: left
+            -webkit-transition: width 0.5s ease-in-out
+            -moz-transition: width 0.5s ease-in-out
+            -ms-transition: width 0.5s ease-in-out
+            -o-transition: width 0.5s ease-in-out
+            transition: width 0.5s ease-in-out
+        .pokemon-name
+          font-size: 14px
+          text-transform: capitalize
+          margin: 6px
+          text-align: center
+      #pokemon-info-front
+        top: 10px
+        left: 10px
+      #pokemon-info-back
+        bottom: 10px
+        right: 10px
       .is-dead
         transform: rotate(90deg)
         -webkit-transition: opacity 1s ease-in-out
@@ -40,15 +67,15 @@
         transition: opacity 1s ease-in-out
         opacity: 0
       img
-        width: 200px
+        position: absolute
+        bottom: 0
     #pokemon-front
       img
-        float: right
-        margin-right: 50px
+        right: 50px
+
     #pokemon-back
       img
-        float: left
-        margin-left: 50px
+        left: 50px
 
 #log-div
   margin: 30px auto

@@ -8,14 +8,16 @@ export class Pokemon implements IPokemon {
     public stats: IStat;
     public imgFront: string;
     public imgBack: string;
+    public img: string;
     public moves: Array<IRedirection>;
 
-    constructor(name, stats, imgFront, imgBack, moves) {
+    constructor(name, stats, imgFront, imgBack, img, moves) {
         this.name = name;
         this.stats = stats;
         this.imgFront = imgFront;
         this.imgBack = imgBack;
         this.moves = moves;
+        this.img = img;
     }
 
     static factoryFromData(data: any): Pokemon {
@@ -23,8 +25,9 @@ export class Pokemon implements IPokemon {
         const attackStat = data.stats.find(s => s.stat.name === 'attack');
         const defenseStat = data.stats.find(s => s.stat.name === 'defense');
         const healthStat = data.stats.find(s => s.stat.name === 'hp');
-        const imgFront = data.sprites.front_default;
-        const imgBack = data.sprites.back_default;
+        const img = data.sprites.front_default;
+        const imgFront = `https://play.pokemonshowdown.com/sprites/xyani/${data.name}.gif`;
+        const imgBack = `https://play.pokemonshowdown.com/sprites/xyani-back/${data.name}.gif`;
 
         const stat = new Stat(
             speedStat ? speedStat.base_stat : 0,
@@ -33,6 +36,6 @@ export class Pokemon implements IPokemon {
             healthStat ? healthStat.base_stat : 0
         );
 
-        return new Pokemon(data.name, stat, imgFront, imgBack, data.moves);
+        return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves);
     }
 }

@@ -1,31 +1,36 @@
 <div id="battle-div" *ngIf="pokemonFront && pokemonBack">
-  <p class="pokemon-name" id="pokemon-front-name">{{pokemonFront?.name}} {{pokemonFront?.stats.health}}</p>
+
   <div id="ground">
     <p id="win-msg"*ngIf="winner" [appPokemonColor]="winner === pokemonFront ? pokemonFrontColor : pokemonBackColor">
       {{winner?.name}} win !!!
     </p>
     <div class="pokemon-div" id="pokemon-front">
       <div>
-        <div>
-          <div>
+        <div class="pokemon-info" id="pokemon-info-front">
+            <p class="pokemon-name"> {{pokemonFront?.name}} {{pokemonFront?.stats.currentHealth}}</p>
+          <div class="health-bar-border">
+              <div class="health-bar" appHealthBar currentHealth="{{pokemonFront.stats.currentHealth}}" totalHealth="{{pokemonFront.stats.totalHealth}}"></div>
           </div>
         </div>
-        <img [ngClass]="{'is-dead': pokemonFront?.stats.health <= 0}" src={{pokemonFront?.imgFront}} alt="">
+        <img [ngClass]="{'is-dead': pokemonFront?.stats.currentHealth <= 0}" src={{pokemonFront?.imgFront}} alt="">
       </div>
     </div>
     <div class="pokemon-div" id="pokemon-back">
       <div>
-        <div>
-          <div>
+          <div class="pokemon-info" id="pokemon-info-back">
+              <p class="pokemon-name">{{pokemonBack?.name}} {{pokemonBack?.stats.currentHealth}}</p>
+              <div class="health-bar-border">
+                  <div class="health-bar" appHealthBar currentHealth="{{pokemonBack.stats.currentHealth}}" totalHealth="{{pokemonBack.stats.totalHealth}}"></div>
+              </div>
           </div>
-        </div>
-        <img [ngClass]="{'is-dead': pokemonBack?.stats.health <= 0}" src={{pokemonBack?.imgBack}} alt="">
+        <img [ngClass]="{'is-dead': pokemonBack?.stats.currentHealth <= 0}" src={{pokemonBack?.imgBack}} alt="">
       </div>
     </div>
   </div>
-  <p class="pokemon-name" id="pokemon-back-name">{{pokemonBack?.name}} {{pokemonBack?.stats.health}}</p>
+
 </div>
 <div id="log-div" appScrollFocusBottom>
+  <p>The fight started on {{ startDate | date:'medium' }}</p>
   <p *ngFor="let log of logs" [appPokemonColor]="log.pokemon === pokemonFront ? pokemonFrontColor : pokemonBackColor">
     {{log.value}}
   </p>
