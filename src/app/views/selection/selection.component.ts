@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {of} from 'rxjs';
-import {first, map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
 @Component({
@@ -25,6 +23,6 @@ export class SelectionComponent implements OnInit {
         const pokemonFront = this.form.value.pokemonFront;
         const pokemonBack = this.form.value.pokemonBack;
 
-        this.router.navigate(['round', 'pokemonFront', pokemonFront, 'pokemonBack', pokemonBack]);
+        this.router.navigate(['selection', 'attacks', 'pokemonFront', pokemonFront, 'pokemonBack', pokemonBack]);
     }
 }

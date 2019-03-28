@@ -11,12 +11,14 @@ import {SelectionComponent} from './views/selection/selection.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { AttackColorDirective } from './core/directive/attack-color.directive';
 import { ScrollFocusBottomDirective } from './core/directive/scroll-focus-bottom.directive';
+import {AttackSelectionComponent} from './views/attackSelection/attackSelection.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         RoundComponent,
         PokemonComponent,
+        AttackSelectionComponent,
         SelectionComponent,
         AttackColorDirective,
         ScrollFocusBottomDirective
