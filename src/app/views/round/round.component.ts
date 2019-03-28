@@ -73,9 +73,7 @@ export class RoundComponent implements OnInit {
         let count = 0;
         const pokemons = this.getAttackOrder(this.pokemonFront, this.pokemonBack);
 
-        const source = interval(1000);
-
-        source
+        interval(1000)
             .pipe(
                 takeWhile(() => pokemons[0].stats.health > 0 && pokemons[1].stats.health > 0)
             )
