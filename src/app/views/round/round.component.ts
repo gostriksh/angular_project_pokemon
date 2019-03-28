@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {concat, filter, first, map, switchAll, switchMap} from 'rxjs/operators';
+import {concat, filter, first, subscribeOn, switchMap, takeUntil, takeWhile} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, OperatorFunction} from 'rxjs';
+import {Observable, interval} from 'rxjs';
 import analyze from 'rgbaster';
 import {ILog} from '../../core/interfaces/ILog';
 import {Log} from '../../core/models/Log';
@@ -21,8 +21,8 @@ export class RoundComponent implements OnInit {
     public logs: ILog[] = [];
     public winner: IPokemon;
     public loser: IPokemon;
-    public pause: boolean;
     public startDate: Date;
+    public pause = false;
 
     constructor(private pokemonService: PokemonService,
                 private route: ActivatedRoute) {
@@ -66,7 +66,7 @@ export class RoundComponent implements OnInit {
         return front$.pipe(concat(back$));
     }
 
-    private getAttackOrder(... pokemons: IPokemon[]): IPokemon[] {
+    private getAttackOrder(...pokemons: IPokemon[]): IPokemon[] {
         return pokemons.sort((a, b) => a.stats.speed > b.stats.speed ? -1 : 1);
     }
 
@@ -74,28 +74,25 @@ export class RoundComponent implements OnInit {
         let count = 0;
         const pokemons = this.getAttackOrder(this.pokemonFront, this.pokemonBack);
         this.startDate = new Date();
-        const interval = setInterval(() => {
-            if (this.pause) {
-                return;
-            }
 
-            if (pokemons[0].stats.currentHealth <= 0 || pokemons[1].stats.currentHealth <= 0) {
-                clearInterval(interval);
-            }
+        interval(1000)
+            .pipe(
+                filter(() => this.pause === false),
+                takeWhile(() => pokemons[0].stats.currentHealth > 0 && pokemons[1].stats.currentHealth > 0)
+            )
+            .subscribe(() => {
+                const firstIndex = count % 2;
+                const secondIndex = (1 + count) % 2;
 
-            const firstIndex = count % 2;
-            const secondIndex = (1 + count) % 2;
+                this.attack(pokemons[firstIndex], pokemons[secondIndex]);
 
-            this.attack(pokemons[firstIndex], pokemons[secondIndex]);
-
-            if (pokemons[secondIndex].stats.currentHealth <= 0) {
-                this.winner = pokemons[firstIndex];
-                this.loser = pokemons[secondIndex];
-            } else {
-                count++;
-            }
-        }, 1000);
-        return;
+                if (pokemons[secondIndex].stats.currentHealth <= 0) {
+                    this.winner = pokemons[firstIndex];
+                    this.loser = pokemons[secondIndex];
+                } else {
+                    count++;
+                }
+            });
     }
 
     private attack(attacker: IPokemon, attacked: IPokemon) {
