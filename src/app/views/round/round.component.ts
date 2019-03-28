@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {concat, filter, first, map, switchAll, switchMap} from 'rxjs/operators';
+import {concat, filter, first, subscribeOn, switchMap, takeUntil, takeWhile} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, OperatorFunction} from 'rxjs';
+import {Observable, interval} from 'rxjs';
 import analyze from 'rgbaster';
 import {ILog} from '../../core/interfaces/ILog';
-import {Log} from "../../core/models/Log";
+import {Log} from '../../core/models/Log';
 
 @Component({
     selector: 'app-round',
@@ -21,7 +21,7 @@ export class RoundComponent implements OnInit {
     public logs: ILog[] = [];
     public winner: IPokemon;
     public loser: IPokemon;
-    public pause: boolean;
+    public pause = false;
 
     constructor(private pokemonService: PokemonService,
                 private route: ActivatedRoute) {
@@ -65,7 +65,7 @@ export class RoundComponent implements OnInit {
         return front$.pipe(concat(back$));
     }
 
-    private getAttackOrder(... pokemons: IPokemon[]): IPokemon[] {
+    private getAttackOrder(...pokemons: IPokemon[]): IPokemon[] {
         return pokemons.sort((a, b) => a.stats.speed > b.stats.speed ? -1 : 1);
     }
 
@@ -73,28 +73,29 @@ export class RoundComponent implements OnInit {
         let count = 0;
         const pokemons = this.getAttackOrder(this.pokemonFront, this.pokemonBack);
 
-        const interval = setInterval(() => {
-            if (this.pause) {
-                return;
-            }
+        const source = interval(1000);
 
-            if (pokemons[0].stats.health <= 0 || pokemons[1].stats.health <= 0) {
-                clearInterval(interval);
-            }
+        source
+            .pipe(
+                takeWhile(() => pokemons[0].stats.health > 0 && pokemons[1].stats.health > 0)
+            )
+            .subscribe(() => {
+                if (this.pause) {
+                    return;
+                }
 
-            const firstIndex = count % 2;
-            const secondIndex = (1 + count) % 2;
+                const firstIndex = count % 2;
+                const secondIndex = (1 + count) % 2;
 
-            this.attack(pokemons[firstIndex], pokemons[secondIndex]);
+                this.attack(pokemons[firstIndex], pokemons[secondIndex]);
 
-            if (pokemons[secondIndex].stats.health <= 0) {
-                this.winner = pokemons[firstIndex];
-                this.loser = pokemons[secondIndex];
-            } else {
-                count++;
-            }
-        }, 1000);
-        return;
+                if (pokemons[secondIndex].stats.health <= 0) {
+                    this.winner = pokemons[firstIndex];
+                    this.loser = pokemons[secondIndex];
+                } else {
+                    count++;
+                }
+            });
     }
 
     private attack(attacker: IPokemon, attacked: IPokemon) {
