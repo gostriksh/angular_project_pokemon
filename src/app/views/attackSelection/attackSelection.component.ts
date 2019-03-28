@@ -35,6 +35,7 @@ export class AttackSelectionComponent implements OnInit {
                 this.pokemonBackAttacks = this.pokemonBack.moves;
                 console.log(this.pokemonFrontAttacks);
                 console.log(this.pokemonBackAttacks);
+                return true;
             })
         ).subscribe();
     }
