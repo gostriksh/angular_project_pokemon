@@ -23,7 +23,7 @@ import { HealthBarDirective } from './core/directive/health-bar.directive';
         SelectionComponent,
         AttackColorDirective,
         ScrollFocusBottomDirective,
-        HealthBarDirective
+        HealthBarDirective,
     ],
     imports: [
         BrowserModule,

@@ -1,3 +1,42 @@
+@keyframes animation-attacked
+  0%
+    -webkit-transition: opacity 0.2s ease-in-out
+    -moz-transition: opacity 0.2s ease-in-out
+    -ms-transition: opacity 0.2s ease-in-out
+    -o-transition: opacity 0.2s ease-in-out
+    transition: opacity 0.2s ease-in-out
+    opacity: 0
+  33%
+    -webkit-transition: opacity 0.2s ease-in-out
+    -moz-transition: opacity 0.2s ease-in-out
+    -ms-transition: opacity 0.2s ease-in-out
+    -o-transition: opacity 0.2s ease-in-out
+    transition: opacity 0.2s ease-in-out
+    opacity: 1
+  66%
+    -webkit-transition: opacity 0.2s ease-in-out
+    -moz-transition: opacity 0.2s ease-in-out
+    -ms-transition: opacity 0.2s ease-in-out
+    -o-transition: opacity 0.2s ease-in-out
+    transition: opacity 0.2s ease-in-out
+    opacity: 0
+  100%
+    -webkit-transition: opacity 0.2s ease-in-out
+    -moz-transition: opacity 0.2s ease-in-out
+    -ms-transition: opacity 0.2s ease-in-out
+    -o-transition: opacity 0.2s ease-in-out
+    transition: opacity 0.2s ease-in-out
+    opacity: 1
+
+@keyframes animation-attacker-front
+  0%
+    transform: translate(-50px, 50px)
+
+@keyframes animation-attacker-back
+  0%
+    transform: translate(50px, -50px)
+
+
 #battle-div
   margin: auto
   width: 650px
@@ -59,12 +98,13 @@
         bottom: 10px
         right: 10px
       .is-dead
+        -webkit-transition: transform 0.2s, opacity 1s ease-in-out
+        -moz-transition: transform 0.2s, opacity 1s ease-in-out
+        -ms-transition: transform 0.2s, opacity 1s ease-in-out
+        -o-transition: transform 0.2s, opacity 1s ease-in-out
+        transition: transform 0.2s, opacity 1s ease-in-out
+        transition-delay: 1s
         transform: rotate(90deg)
-        -webkit-transition: opacity 1s ease-in-out
-        -moz-transition: opacity 1s ease-in-out
-        -ms-transition: opacity 1s ease-in-out
-        -o-transition: opacity 1s ease-in-out
-        transition: opacity 1s ease-in-out
         opacity: 0
       img
         position: absolute
@@ -86,5 +126,15 @@
 #pause
   display: block
   margin: auto
+.animation-attacked
+  animation-name: animation-attacked
+  animation-delay: 0.3s
+  animation-duration: 0.5s
+.animation-attacker-back
+  animation-name: animation-attacker-back
+  animation-duration: 0.5s
+.animation-attacker-front
+  animation-name: animation-attacker-front
+  animation-duration: 0.5s
 
 

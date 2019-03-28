@@ -7,5 +7,7 @@ export interface IPokemon {
   imgFront: string;
   imgBack: string;
   img: string;
+  isAttacked: boolean;
+  isAttacking: boolean;
   moves: Array<IRedirection>;
 }

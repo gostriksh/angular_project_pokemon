@@ -75,7 +75,7 @@ export class RoundComponent implements OnInit {
         const pokemons = this.getAttackOrder(this.pokemonFront, this.pokemonBack);
         this.startDate = new Date();
 
-        interval(1000)
+        interval(1500)
             .pipe(
                 filter(() => this.pause === false),
                 takeWhile(() => pokemons[0].stats.currentHealth > 0 && pokemons[1].stats.currentHealth > 0)
@@ -83,12 +83,25 @@ export class RoundComponent implements OnInit {
             .subscribe(() => {
                 const firstIndex = count % 2;
                 const secondIndex = (1 + count) % 2;
+                const pokemonAttacker = pokemons[firstIndex];
+                const pokemonAttacked = pokemons[secondIndex];
 
-                this.attack(pokemons[firstIndex], pokemons[secondIndex]);
+                pokemonAttacked.isAttacked = true;
+                pokemonAttacker.isAttacking = true;
 
-                if (pokemons[secondIndex].stats.currentHealth <= 0) {
-                    this.winner = pokemons[firstIndex];
-                    this.loser = pokemons[secondIndex];
+                this.attack(pokemonAttacker, pokemonAttacked);
+
+                setTimeout(
+                    () => {
+                        pokemonAttacked.isAttacked = false;
+                        pokemonAttacker.isAttacking = false;
+                    },
+                    1000
+                );
+
+                if (pokemonAttacked.stats.currentHealth <= 0) {
+                    this.winner = pokemonAttacker;
+                    this.loser = pokemonAttacked;
                 } else {
                     count++;
                 }
