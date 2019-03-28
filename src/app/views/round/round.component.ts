@@ -75,13 +75,10 @@ export class RoundComponent implements OnInit {
 
         interval(1000)
             .pipe(
+                filter(() => this.pause === false),
                 takeWhile(() => pokemons[0].stats.health > 0 && pokemons[1].stats.health > 0)
             )
             .subscribe(() => {
-                if (this.pause) {
-                    return;
-                }
-
                 const firstIndex = count % 2;
                 const secondIndex = (1 + count) % 2;
 
