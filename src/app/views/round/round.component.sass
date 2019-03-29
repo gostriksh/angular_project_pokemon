@@ -145,11 +145,14 @@
         left: 50px
 
 #log-div
-  margin: 30px auto
+  margin: 15px auto
   width: 650px
   height: 200px
   overflow: scroll
   overflow-x: hidden
+  border: 1px solid black
+  .log-messages
+    margin: 15px
 #pause
   display: block
   margin: auto
@@ -167,3 +170,26 @@
 .bold
   font-weight: bold
 
+.attack-lists
+  margin: 15px auto
+  width: 650px
+  height: 150px
+  .attack-pokemon-name
+    font-weight: bold
+    font-size: 17px
+    text-align: center
+  .attack-names
+    margin: 0
+    text-align: center
+  #attack-list-back
+    height: 100%
+    width: 310px
+    float: left
+    border: 1px solid black
+    border-radius: 10px
+  #attack-list-front
+    height: 100%
+    width: 310px
+    float: right
+    border: 1px solid black
+    border-radius: 15px

@@ -38,19 +38,24 @@
     </div>
   </div>
 </div>
-<ul>
-  <li *ngFor="let attack of pokemonBack.attacks" (click)="processAttack(pokemonBack, pokemonFront, attack)">
-    {{attack.name}}
-  </li>
-</ul>
-<ul>
-  <li *ngFor="let attack of pokemonFront.attacks" (click)="processAttack(pokemonFront, pokemonBack, attack)">
-    {{attack.name}}
-  </li>
-</ul>
+<div class="attack-lists">
+    <div id="attack-list-back">
+        <p [appPokemonColor]="pokemonBack.color" class="attack-pokemon-name">{{pokemonBack.name}}</p>
+        <p class="attack-names" *ngFor="let attack of pokemonBack.attacks" (click)="processAttack(pokemonBack, pokemonFront, attack)">
+            {{attack.name}}
+        </p>
+    </div>
+    <div id="attack-list-front">
+        <p [appPokemonColor]="pokemonFront.color" class="attack-pokemon-name">{{pokemonFront.name}}</p>
+        <p class="attack-names" *ngFor="let attack of pokemonFront.attacks" (click)="processAttack(pokemonFront, pokemonBack, attack)">
+            {{attack.name}}
+        </p>
+    </div>
+</div>
+
 <div id="log-div" appScrollFocusBottom>
-  <p>The fight started on {{ startDate | date:'medium' }}</p>
-  <p *ngFor="let log of logs">
+  <p class="log-messages">The fight started on {{ startDate | date:'medium' }}</p>
+  <p class="log-messages" *ngFor="let log of logs">
     <span class="bold" [appPokemonColor]="log.pokemonAttacker.color">{{log.pokemonAttacker.name}}</span>
     use
     <span class="bold" [appPokemonColor]="log.pokemonAttacker.color"> {{log.attack.name}}</span>
