@@ -8,7 +8,7 @@ import {IPokemon} from '../interfaces/IPokemon';
 @Injectable()
 export class PokemonService {
 
-    public  pokemonFront: IPokemon;
+    public pokemonFront: IPokemon;
     public pokemonBack: IPokemon;
 
     constructor(private http: HttpClient) {

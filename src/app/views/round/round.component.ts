@@ -1,12 +1,13 @@
 import {ChangeDetectorRef, Component, OnChanges, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {filter, takeWhile} from 'rxjs/operators';
+import {filter, first, map, mergeMap, switchMap, takeWhile, tap} from 'rxjs/operators';
 import {interval} from 'rxjs';
 import analyze from 'rgbaster';
 import {ILog} from '../../core/interfaces/ILog';
 import {Log} from '../../core/models/Log';
 import {IAttack} from '../../core/interfaces/IAttack';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 
 @Component({
     selector: 'app-round',
@@ -15,18 +16,18 @@ import {IAttack} from '../../core/interfaces/IAttack';
 })
 export class RoundComponent implements OnInit {
 
-    constructor(private pokemonService: PokemonService) {
+    constructor(private pokemonService: PokemonService,
+                private route: ActivatedRoute) {
     }
 
     public pokemonFront: IPokemon;
-    public pokemonFrontColor: string;
     public pokemonBack: IPokemon;
-    public pokemonBackColor: string;
     public logs: ILog[] = [];
     public winner: IPokemon;
     public loser: IPokemon;
     public startDate: Date;
     public pause = false;
+    public choice: string;
 
     private static getAttackOrder(...pokemons: IPokemon[]): IPokemon[] {
         return pokemons.sort((a, b) => a.stats.speed > b.stats.speed ? -1 : 1);
@@ -36,9 +37,12 @@ export class RoundComponent implements OnInit {
         this.pokemonFront = this.pokemonService.pokemonFront;
         this.pokemonBack = this.pokemonService.pokemonBack;
 
-        this.setColors()
-            .then(() => this.fight())
-            .catch(console.error);
+        this.route.paramMap.pipe(
+            switchMap((params: ParamMap) => this.choice = params.get('choice')),
+            first(this.setColors.bind(this)),
+            tap(() => this.choice === 'bvb' && this.fight())
+        )
+            .subscribe();
     }
 
     public setPause() {
@@ -71,17 +75,15 @@ export class RoundComponent implements OnInit {
 
                 this.processAttack(pokemonAttacker, pokemonAttacked, attack);
 
-                if (pokemonAttacked.stats.currentHealth <= 0) {
-                    this.winner = pokemonAttacker;
-                    this.loser = pokemonAttacked;
-                } else {
-                    count++;
-                }
+                count++;
             });
     }
 
     private processAttack(attacker: IPokemon, attacked: IPokemon, attack: IAttack) {
-        if (attacked.stats.currentHealth <= 0) {
+        attacked.isAttacking = false;
+        attacker.isAttacked = false;
+
+        if (attacked.stats.currentHealth <= 0 && attacker.stats.currentHealth >= 0) {
             return;
         }
 
@@ -99,16 +101,10 @@ export class RoundComponent implements OnInit {
 
         this.logs.push(new Log(attacker, attacked, attack, trueDamage));
 
-        setTimeout(
-            () => {
-                attacked.isAttacked = false;
-                attacker.isAttacking = false;
-            },
-            1000
-        );
-
-        if (attacked.stats.currentHealth < 0) {
+        if (attacked.stats.currentHealth <= 0) {
             attacked.stats.currentHealth = 0;
+            this.winner = attacker;
+            this.loser = attacked;
         }
     }
 }
