@@ -3,15 +3,13 @@
 
     <div class="selection-container">
         <div class="pokemon-search">
-
-            <form>
+            <form [formGroup]="front" (ngSubmit)="onFrontSubmit()">
                 <label>
                     Pokemon front
-                    <input id="front-input" type="text" (keydown.enter)="choosePokemon($event)">
+                    <input type="text" formControlName="frontInput">
                 </label>
-                <input type="submit">
+                <input type="submit" value="Select">
             </form>
-
 
             <span class="error">{{frontErrorMessage}}</span>
         </div>
@@ -51,10 +49,13 @@
 
     <div class="selection-container">
         <div class="pokemon-search">
-            <label>
-                Pokemon back
-                <input id="back-input" type="text" (keydown.enter)="choosePokemon($event)">
-            </label>
+            <form [formGroup]="back" (ngSubmit)="onBackSubmit()">
+                <label>
+                    Pokemon back
+                    <input type="text" formControlName="backInput">
+                </label>
+                <input type="submit" value="Select">
+            </form>
             <span class="error">{{backErrorMessage}}</span>
         </div>
         <div class="pokemon-attacks" [ngClass]="pokemonBack ?'' :'hidden'">

@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {IPokemon} from '../../core/interfaces/IPokemon';
 import {catchError, finalize} from 'rxjs/internal/operators';
 import {IAttack} from '../../core/interfaces/IAttack';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-attack-selection',
@@ -13,7 +14,7 @@ import {IAttack} from '../../core/interfaces/IAttack';
     styleUrls: ['./selection.component.sass']
 })
 
-export class SelectionComponent {
+export class SelectionComponent implements OnInit {
 
     constructor(private pokemonService: PokemonService,
                 private router: Router) {
@@ -21,6 +22,8 @@ export class SelectionComponent {
 
     ERROR_MESSAGE = 'This pokemon does not exist !';
 
+    public front: FormGroup;
+    public back: FormGroup;
     public pokemonFront: IPokemon;
     public pokemonBack: IPokemon;
     public frontValidated: boolean;
@@ -28,25 +31,42 @@ export class SelectionComponent {
     public frontErrorMessage: string;
     public backErrorMessage: string;
 
-    public choosePokemon(event) {
-        const id = event.target.id;
-        this.fetchPokemons(event.target.value.toLowerCase())
+
+    ngOnInit() {
+        this.front = new FormGroup({
+            frontInput: new FormControl('', [Validators.required])
+        });
+        this.back = new FormGroup({
+            backInput: new FormControl('', [Validators.required])
+        });
+    }
+
+    public onFrontSubmit() {
+        this.getPokemons(this.front.value.frontInput, this.front);
+    }
+
+    public onBackSubmit() {
+        this.getPokemons(this.back.value.backInput, this.back);
+    }
+
+    public getPokemons(value, form) {
+        this.fetchPokemons(value.toLowerCase())
             .pipe(
                 catchError((error) => {
-                    return this.handlePokemonSearchError(id, error);
+                    return this.handlePokemonSearchError(form, error);
                 }),
             )
             .pipe(
                 first(p => {
-                    return this.handlePokemonSearchSuccess(id, p);
+                    return this.handlePokemonSearchSuccess(form, p);
                 }),
-                finalize(() => this.getAllAttacks(id))
+                finalize(() => this.getAllAttacks(form))
             )
             .subscribe();
     }
 
-    public getAllAttacks(id: string) {
-        const pokemon = id === 'front-input' ? this.pokemonFront : this.pokemonBack;
+    public getAllAttacks(form: FromGroup) {
+        const pokemon = form === this.front ? this.pokemonFront : this.pokemonBack;
         this.fetchAttacks(pokemon)
             .pipe(
                 tap(a => {
@@ -56,8 +76,8 @@ export class SelectionComponent {
             .subscribe();
     }
 
-    public handlePokemonSearchSuccess(id: string, pokemon: IPokemon): boolean {
-        if (id === 'front-input') {
+    public handlePokemonSearchSuccess(form: FromGroup, pokemon: IPokemon): boolean {
+        if (form === this.front) {
             this.pokemonFront = pokemon;
             this.frontErrorMessage = '';
         } else {
@@ -67,8 +87,8 @@ export class SelectionComponent {
         return pokemon !== undefined;
     }
 
-    public handlePokemonSearchError(id: string, error: any): Observable<never> {
-        if (id === 'front-input') {
+    public handlePokemonSearchError(form: FromGroup, error: any): Observable<never> {
+        if (form === this.front) {
             this.pokemonFront = undefined;
             this.frontErrorMessage = this.ERROR_MESSAGE;
         } else {
