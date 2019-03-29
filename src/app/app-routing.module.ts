@@ -1,17 +1,12 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {SelectionComponent} from './views/selection/selection.component';
 import {RoundComponent} from './views/round/round.component';
-import {AttackSelectionComponent} from './views/attackSelection/attackSelection.component';
+import {SelectionComponent} from './views/selection/selection.component';
 
 const routes: Routes = [
     {
-        path: 'selection',
+        path: '',
         component: SelectionComponent
-    },
-    {
-        path: 'attacks/pokemonFront/:pokemonFront/pokemonBack/:pokemonBack',
-        component: AttackSelectionComponent
     },
     {
         path: 'round',

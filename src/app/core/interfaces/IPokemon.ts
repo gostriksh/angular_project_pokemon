@@ -11,5 +11,6 @@ export interface IPokemon {
   isAttacked: boolean;
   isAttacking: boolean;
   moves: Array<IRedirection>;
+  allAttacks: Array<IAttack>;
   attacks: Array<IAttack>;
 }

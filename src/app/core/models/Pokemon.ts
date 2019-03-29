@@ -13,15 +13,17 @@ export class Pokemon implements IPokemon {
     public isAttacked: boolean;
     public isAttacking: boolean;
     public moves: Array<IRedirection>;
+    public allAttacks: Array<IAttack>;
     public attacks: Array<IAttack>;
 
-    constructor(name, stats, imgFront, imgBack, img, moves, attacks) {
+    constructor(name, stats, imgFront, imgBack, img, moves, allAttacks, attacks) {
         this.name = name;
         this.stats = stats;
         this.imgFront = imgFront;
         this.imgBack = imgBack;
         this.moves = moves;
         this.attacks = attacks;
+        this.allAttacks = attacks;
         this.img = img;
         this.isAttacked = false;
         this.isAttacking = false;
@@ -43,6 +45,6 @@ export class Pokemon implements IPokemon {
             healthStat ? healthStat.base_stat : 0
         );
 
-        return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves, []);
+        return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves, [], []);
     }
 }

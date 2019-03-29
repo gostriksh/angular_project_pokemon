@@ -35,8 +35,6 @@ export class RoundComponent implements OnInit {
         this.pokemonFront = this.pokemonService.pokemonFront;
         this.pokemonBack = this.pokemonService.pokemonBack;
 
-        console.log(this.pokemonService)
-        console.log(this.pokemonBack)
         this.setColors()
             .then(() => this.fight())
             .catch(console.error);
