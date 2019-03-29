@@ -19,7 +19,7 @@
                 <p>Attack selected</p>
                 <ul>
                     <li *ngFor="let attack of pokemonFront?.attacks">
-                        <span (click)="removeAttack(pokemonFront, attack)">{{attack.name}}</span>
+                        <span (click)="removeAttack(pokemonFront, attack)">{{attack.name}} {{attack.power}}</span>
                     </li>
                 </ul>
             </div>
@@ -33,7 +33,7 @@
                 <ul class="attack-list">
                     <li *ngFor="let frontAttack of pokemonFront?.allAttacks"
                         (click)="onSelect(frontAttack, pokemonFront)">
-                        <span class="attack">{{frontAttack.name}}</span>
+                        <span class="attack">{{frontAttack.name}} {{frontAttack.power}}</span>
                     </li>
                 </ul>
             </div>
@@ -75,7 +75,7 @@
                 <p>Attack selected</p>
                 <ul>
                     <li *ngFor="let attack of pokemonBack?.attacks">
-                        <span (click)="removeAttack(pokemonBack, attack)">{{attack.name}}</span>
+                        <span (click)="removeAttack(pokemonBack, attack)">{{attack.name}} {{attack.power}}</span>
                     </li>
                 </ul>
             </div>
@@ -89,7 +89,7 @@
                 <p>Attack to select</p>
                 <ul>
                     <li *ngFor="let backAttack of pokemonBack?.allAttacks" (click)="onSelect(backAttack, pokemonBack)">
-                        <span class="attack">{{backAttack.name}}</span>
+                        <span class="attack">{{backAttack.name}} {{backAttack.power}}</span>
                     </li>
                 </ul>
             </div>
