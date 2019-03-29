@@ -15,6 +15,7 @@ export class Pokemon implements IPokemon {
     public damageArray: number[];
     public moves: Array<IRedirection>;
     public attacks: Array<IAttack>;
+    public color: string;
 
     constructor(name, stats, imgFront, imgBack, img, moves, attacks) {
         this.name = name;
@@ -46,5 +47,9 @@ export class Pokemon implements IPokemon {
         );
 
         return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves, []);
+    }
+
+    public setColor(color: string): void {
+        this.color = color;
     }
 }

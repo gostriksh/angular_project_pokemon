@@ -6,6 +6,7 @@ import {interval} from 'rxjs';
 import analyze from 'rgbaster';
 import {ILog} from '../../core/interfaces/ILog';
 import {Log} from '../../core/models/Log';
+import {IAttack} from '../../core/interfaces/IAttack';
 
 @Component({
     selector: 'app-round',
@@ -35,8 +36,6 @@ export class RoundComponent implements OnInit {
         this.pokemonFront = this.pokemonService.pokemonFront;
         this.pokemonBack = this.pokemonService.pokemonBack;
 
-        console.log(this.pokemonService)
-        console.log(this.pokemonBack)
         this.setColors()
             .then(() => this.fight())
             .catch(console.error);
@@ -48,9 +47,9 @@ export class RoundComponent implements OnInit {
 
     public async setColors() {
         const resultFront = await analyze(this.pokemonFront.img);
-        this.pokemonFrontColor = resultFront[0].color;
+        this.pokemonFront.setColor(resultFront[0].color);
         const resultBack = await analyze(this.pokemonBack.img);
-        this.pokemonBackColor = resultBack[0].color;
+        this.pokemonBack.setColor(resultBack[0].color);
     }
 
     private fight(): void {
@@ -68,19 +67,9 @@ export class RoundComponent implements OnInit {
                 const secondIndex = (1 + count) % 2;
                 const pokemonAttacker = pokemons[firstIndex];
                 const pokemonAttacked = pokemons[secondIndex];
+                const attack = pokemonAttacker.attacks[Math.floor(Math.random() * pokemonAttacker.attacks.length)];
 
-                pokemonAttacked.isAttacked = true;
-                pokemonAttacker.isAttacking = true;
-
-                this.attack(pokemonAttacker, pokemonAttacked);
-
-                setTimeout(
-                    () => {
-                        pokemonAttacked.isAttacked = false;
-                        pokemonAttacker.isAttacking = false;
-                    },
-                    1000
-                );
+                this.processAttack(pokemonAttacker, pokemonAttacked, attack);
 
                 if (pokemonAttacked.stats.currentHealth <= 0) {
                     this.winner = pokemonAttacker;
@@ -91,19 +80,32 @@ export class RoundComponent implements OnInit {
             });
     }
 
-
-    private attack(attacker: IPokemon, attacked: IPokemon) {
+    private processAttack(attacker: IPokemon, attacked: IPokemon, attack: IAttack) {
         if (attacked.stats.currentHealth <= 0) {
             return;
         }
 
-        const damage: number = attacker.stats.attack - attacked.stats.defense;
+        attacked.isAttacked = true;
+        attacker.isAttacking = true;
+
+        const damage: number = Math.floor(
+            Math.floor(
+                Math.floor(2 / 5 + 2) * attacker.stats.attack * attack.power / attacked.stats.defense
+            ) / 50
+        ) + 2;
         const trueDamage: number = damage > 0 ? damage : 1;
         attacked.damageArray = attacked.damageArray.concat(trueDamage);
         attacked.stats.currentHealth -= trueDamage;
 
-        const value = `${attacker.name} attack ${attacked.name} and deal ${trueDamage}`;
-        this.logs.push(new Log(value, attacker));
+        this.logs.push(new Log(attacker, attacked, attack, trueDamage));
+
+        setTimeout(
+            () => {
+                attacked.isAttacked = false;
+                attacker.isAttacking = false;
+            },
+            1000
+        );
 
         if (attacked.stats.currentHealth < 0) {
             attacked.stats.currentHealth = 0;

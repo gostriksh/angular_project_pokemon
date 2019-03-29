@@ -7,10 +7,13 @@ export interface IPokemon {
   stats: IStat;
   imgFront: string;
   imgBack: string;
-  img: string;
   isAttacked: boolean;
   isAttacking: boolean;
   damageArray: number[];
   moves: Array<IRedirection>;
   attacks: Array<IAttack>;
+  color: string;
+  img: string;
+
+  setColor(color: string);
 }

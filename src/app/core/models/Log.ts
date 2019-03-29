@@ -1,12 +1,17 @@
 import {ILog} from '../interfaces/ILog';
 import {IPokemon} from '../interfaces/IPokemon';
+import {IAttack} from '../interfaces/IAttack';
 
 export class Log implements ILog {
-    pokemon: IPokemon;
-    value: string;
+    pokemonAttacked: IPokemon;
+    pokemonAttacker: IPokemon;
+    attack: IAttack;
+    damage: number;
 
-    constructor(value, pokemon) {
-        this.value = value;
-        this.pokemon = pokemon;
+    constructor(pokemonAttacker, pokemonAttacked, attack, damage) {
+        this.damage = damage;
+        this.pokemonAttacked = pokemonAttacked;
+        this.pokemonAttacker = pokemonAttacker;
+        this.attack = attack;
     }
 }
