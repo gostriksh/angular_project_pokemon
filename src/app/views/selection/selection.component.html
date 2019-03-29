@@ -16,7 +16,7 @@
             <div class="attacks-selected">
                 <p>Attack selected</p>
                 <ul>
-                    <li *ngFor="let attack of pokemonFrontAttacks">
+                    <li *ngFor="let attack of pokemonFront?.attacks">
                         <span>{{attack.name}}</span>
                     </li>
                 </ul>
@@ -25,15 +25,22 @@
                 <span [ngClass]="frontValidated ? '' : 'hidden'">Done !</span>
             </div>
             <ul class="attack-list">
-                <li *ngFor="let frontAttack of pokemonFront?.moves" (click)="onSelect(frontAttack.move, pokemonFront)">
-                    <span class="attack">{{frontAttack.move.name}}</span>
+                <li *ngFor="let frontAttack of pokemonFront?.allAttacks" (click)="onSelect(frontAttack, pokemonFront)">
+                    <span class="attack">{{frontAttack.name}}</span>
                 </li>
             </ul>
         </div>
 
     </div>
 
-    <button (click)="launchFight()" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Fight !</button>
+
+    <button (click)="launchFight('bvb')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Bot vs Bot fight !</button>
+
+    <button (click)="launchFight('pvp')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Player vs Player fight !</button>
+
+
+
+
     <div class="selection-container">
         <div class="pokemon-search">
             <label>
@@ -48,7 +55,7 @@
             <div class="attacks-selected">
                 <p>Attack selected</p>
                 <ul>
-                    <li *ngFor="let attack of pokemonBackAttacks">
+                    <li *ngFor="let attack of pokemonBack?.attacks">
                         <span>{{attack.name}}</span>
                     </li>
                 </ul>
@@ -56,8 +63,8 @@
                 <span [ngClass]="backValidated ? '' : 'hidden'">Done !</span>
             </div>
             <ul class="attack-list">
-                <li *ngFor="let backAttack of pokemonBack?.moves" (click)="onSelect(backAttack.move, pokemonBack)">
-                    <span class="attack">{{backAttack.move.name}}</span>
+                <li *ngFor="let backAttack of pokemonBack?.allAttacks" (click)="onSelect(backAttack, pokemonBack)">
+                    <span class="attack">{{backAttack.name}}</span>
                 </li>
             </ul>
         </div>

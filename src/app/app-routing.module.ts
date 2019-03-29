@@ -9,7 +9,7 @@ const routes: Routes = [
         component: SelectionComponent
     },
     {
-        path: 'round',
+        path: 'round/:choice',
         component: RoundComponent
     }
 ];

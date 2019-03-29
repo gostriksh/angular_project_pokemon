@@ -4,8 +4,7 @@ import {forkJoin, Observable, throwError} from 'rxjs';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {Router} from '@angular/router';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {IRedirection} from '../../core/interfaces/common/IRedirection';
-import {catchError, filter, finalize} from 'rxjs/internal/operators';
+import {catchError, finalize} from 'rxjs/internal/operators';
 import {IAttack} from '../../core/interfaces/IAttack';
 
 @Component({
@@ -13,7 +12,7 @@ import {IAttack} from '../../core/interfaces/IAttack';
     templateUrl: './selection.component.html',
     styleUrls: ['./selection.component.sass']
 })
-export class SelectionComponent implements OnInit {
+export class SelectionComponent {
 
     constructor(private pokemonService: PokemonService,
                 private router: Router) {
@@ -23,8 +22,6 @@ export class SelectionComponent implements OnInit {
 
     public pokemonFront: IPokemon;
     public pokemonBack: IPokemon;
-    public pokemonFrontAttacks: Array<IRedirection> = [];
-    public pokemonBackAttacks: Array<IRedirection> = [];
     public frontValidated: boolean;
     public backValidated: boolean;
     public frontErrorMessage: string;
@@ -54,7 +51,6 @@ export class SelectionComponent implements OnInit {
                 tap(a => {
                     pokemon.allAttacks = a.filter(val => val.power !== null);
                 }),
-                finalize(() => console.log(pokemon))
             )
             .subscribe();
     }
@@ -87,7 +83,7 @@ export class SelectionComponent implements OnInit {
     }
 
     public onSelect(attack: IAttack, pokemon: IPokemon) {
-        const attacks = pokemon === this.pokemonFront ? this.pokemonFrontAttacks : this.pokemonBackAttacks;
+        const attacks = pokemon === this.pokemonFront ? this.pokemonFront.attacks : this.pokemonBack.attacks;
 
         const isAttackAlreadySelected = attacks.find(value => value.name === attack.name);
         const numberOfAttackSelected = attacks.length;
@@ -103,18 +99,13 @@ export class SelectionComponent implements OnInit {
         } else {
             this.backValidated = true;
         }
-        console.log(pokemon);
     }
 
-    ngOnInit() {
-
-    }
-
-    public launchFight() {
+    public launchFight(choice: string) {
         if (this.backValidated && this.frontValidated) {
             this.pokemonService.pokemonFront = this.pokemonFront;
             this.pokemonService.pokemonBack = this.pokemonBack;
-            this.router.navigate(['round'])
+            this.router.navigate(['round', choice])
                 .catch(error => console.log(error));
         }
     }
@@ -125,7 +116,6 @@ export class SelectionComponent implements OnInit {
 
     private fetchAttacks(pokemon: IPokemon): Observable<any> {
         const attacks = pokemon.moves;
-        console.log(pokemon);
         const attackRequests = [];
 
         for (const attack of attacks) {
