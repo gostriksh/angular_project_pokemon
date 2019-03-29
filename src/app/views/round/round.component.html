@@ -41,13 +41,13 @@
 <div *ngIf="choice === 'pvp'" class="attack-lists">
     <div id="attack-list-back">
         <p [appPokemonColor]="pokemonBack?.color" class="attack-pokemon-name">{{pokemonBack?.name}}</p>
-        <p class="attack-names" *ngFor="let attack of pokemonBack?.attacks" (click)="pokemonBack.isAttacking === false && processAttack(pokemonBack, pokemonFront, attack)">
+        <p [appBackgroundPokemonColor]="pokemonBack?.color" class="attack-names" *ngFor="let attack of pokemonBack?.attacks" (click)="pokemonBack.isAttacking === false && processAttack(pokemonBack, pokemonFront, attack)">
             {{attack.name}}
         </p>
     </div>
     <div id="attack-list-front">
         <p [appPokemonColor]="pokemonFront?.color" class="attack-pokemon-name">{{pokemonFront?.name}}</p>
-        <p class="attack-names" *ngFor="let attack of pokemonFront?.attacks" (click)="pokemonFront.isAttacking === false && processAttack(pokemonFront, pokemonBack, attack)">
+        <p [appBackgroundPokemonColor]="pokemonFront?.color" class="attack-names" *ngFor="let attack of pokemonFront?.attacks" (click)="pokemonFront.isAttacking === false && processAttack(pokemonFront, pokemonBack, attack)">
             {{attack.name}}
         </p>
     </div>
@@ -65,6 +65,6 @@
     <span class="bold" [appPokemonColor]="log?.pokemonAttacker.color">{{log.damage}}</span>
   </p>
 </div>
-<button id="pause" (click)="setPause()">{{pause ? 'Resume' : 'Pause'}}</button>
+<button *ngIf="choice === 'bvb'" id="pause" (click)="setPause()">{{pause ? 'Resume' : 'Pause'}}</button>
 
 s

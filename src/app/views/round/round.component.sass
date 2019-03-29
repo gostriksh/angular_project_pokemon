@@ -47,6 +47,7 @@
 #battle-div
   margin: auto
   width: 650px
+  font-family: Arial
   #win-msg
     position: absolute
     left: 50%
@@ -145,6 +146,7 @@
         left: 50px
 
 #log-div
+  font-family: Arial
   margin: 15px auto
   width: 650px
   height: 200px
@@ -171,15 +173,16 @@
   font-weight: bold
 
 .attack-lists
+  font-family: Arial
   margin: 15px auto
   width: 650px
-  height: 150px
+  height: 180px
   .attack-pokemon-name
     font-weight: bold
     font-size: 17px
     text-align: center
+    margin: 10px
   .attack-names
-    margin: 0
     text-align: center
   #attack-list-back
     height: 100%
@@ -193,3 +196,18 @@
     float: right
     border: 1px solid black
     border-radius: 15px
+
+.attack-names
+  box-shadow: 1px 1px 5px darkgrey
+  text-shadow: 1px 1px 1px darkgrey
+  border-radius: 4px
+  margin: 5px auto
+  width: 150px
+  cursor: pointer
+  color: #ffffff
+  font-size: 14px
+  padding: 5px 10px
+  text-decoration: none
+.attack-names:hover
+  opacity: 0.8
+

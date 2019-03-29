@@ -37,6 +37,8 @@ export class RoundComponent implements OnInit {
         this.pokemonFront = this.pokemonService.pokemonFront;
         this.pokemonBack = this.pokemonService.pokemonBack;
 
+        this.startDate = new Date();
+
         this.route.paramMap.pipe(
             switchMap((params: ParamMap) => this.choice = params.get('choice')),
             first(this.setColors.bind(this)),
@@ -59,7 +61,6 @@ export class RoundComponent implements OnInit {
     private fight(): void {
         let count = 0;
         const pokemons = RoundComponent.getAttackOrder(this.pokemonFront, this.pokemonBack);
-        this.startDate = new Date();
 
         interval(1500)
             .pipe(
