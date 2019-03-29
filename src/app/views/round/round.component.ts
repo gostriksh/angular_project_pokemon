@@ -1,9 +1,8 @@
 import {ChangeDetectorRef, Component, OnChanges, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {concat, filter, first, subscribeOn, switchMap, takeUntil, takeWhile} from 'rxjs/operators';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, interval} from 'rxjs';
+import {filter, takeWhile} from 'rxjs/operators';
+import {interval} from 'rxjs';
 import analyze from 'rgbaster';
 import {ILog} from '../../core/interfaces/ILog';
 import {Log} from '../../core/models/Log';
@@ -14,6 +13,10 @@ import {Log} from '../../core/models/Log';
     styleUrls: ['./round.component.sass']
 })
 export class RoundComponent implements OnInit {
+
+    constructor(private pokemonService: PokemonService) {
+    }
+
     public pokemonFront: IPokemon;
     public pokemonFrontColor: string;
     public pokemonBack: IPokemon;
@@ -24,18 +27,19 @@ export class RoundComponent implements OnInit {
     public startDate: Date;
     public pause = false;
 
-    constructor(private pokemonService: PokemonService,
-                private route: ActivatedRoute) {
+    private static getAttackOrder(...pokemons: IPokemon[]): IPokemon[] {
+        return pokemons.sort((a, b) => a.stats.speed > b.stats.speed ? -1 : 1);
     }
 
     ngOnInit() {
-        this.route.paramMap.pipe(
-            switchMap(this.fetchPokemons.bind(this)),
-            filter(() => !!(this.pokemonFront && this.pokemonBack)),
-            first(this.setColors.bind(this)),
-            first(this.fight.bind(this))
-        )
-            .subscribe();
+        this.pokemonFront = this.pokemonService.pokemonFront;
+        this.pokemonBack = this.pokemonService.pokemonBack;
+
+        console.log(this.pokemonService)
+        console.log(this.pokemonBack)
+        this.setColors()
+            .then(() => this.fight())
+            .catch(console.error);
     }
 
     public setPause() {
@@ -49,30 +53,9 @@ export class RoundComponent implements OnInit {
         this.pokemonBackColor = resultBack[0].color;
     }
 
-    private fetchPokemons(params): Observable<any> {
-        const pokemonFrontName = params.get('pokemonFront');
-        const pokemonBackName = params.get('pokemonBack');
-
-        const front$ = this.pokemonService.show(pokemonFrontName)
-            .pipe(
-                first(p => this.pokemonFront = p)
-            );
-
-        const back$ = this.pokemonService.show(pokemonBackName)
-            .pipe(
-                first(p => this.pokemonBack = p)
-            );
-
-        return front$.pipe(concat(back$));
-    }
-
-    private getAttackOrder(...pokemons: IPokemon[]): IPokemon[] {
-        return pokemons.sort((a, b) => a.stats.speed > b.stats.speed ? -1 : 1);
-    }
-
     private fight(): void {
         let count = 0;
-        const pokemons = this.getAttackOrder(this.pokemonFront, this.pokemonBack);
+        const pokemons = RoundComponent.getAttackOrder(this.pokemonFront, this.pokemonBack);
         this.startDate = new Date();
 
         interval(1500)

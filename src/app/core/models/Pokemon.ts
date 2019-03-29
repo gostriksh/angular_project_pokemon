@@ -2,6 +2,7 @@ import {IStat} from '../interfaces/IStat';
 import {IPokemon} from '../interfaces/IPokemon';
 import {Stat} from './Stat';
 import {IRedirection} from '../interfaces/common/IRedirection';
+import {IAttack} from '../interfaces/IAttack';
 
 export class Pokemon implements IPokemon {
     public name: string;
@@ -13,13 +14,15 @@ export class Pokemon implements IPokemon {
     public isAttacking: boolean;
     public damageArray: number[];
     public moves: Array<IRedirection>;
+    public attacks: Array<IAttack>;
 
-    constructor(name, stats, imgFront, imgBack, img, moves) {
+    constructor(name, stats, imgFront, imgBack, img, moves, attacks) {
         this.name = name;
         this.stats = stats;
         this.imgFront = imgFront;
         this.imgBack = imgBack;
         this.moves = moves;
+        this.attacks = attacks;
         this.img = img;
         this.isAttacked = false;
         this.isAttacking = false;
@@ -42,6 +45,6 @@ export class Pokemon implements IPokemon {
             healthStat ? healthStat.base_stat : 0
         );
 
-        return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves);
+        return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves, []);
     }
 }

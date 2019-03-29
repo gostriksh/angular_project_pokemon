@@ -14,7 +14,7 @@ const routes: Routes = [
         component: AttackSelectionComponent
     },
     {
-        path: 'round/pokemonFront/:pokemonFront/pokemonBack/:pokemonBack',
+        path: 'round',
         component: RoundComponent
     }
 ];

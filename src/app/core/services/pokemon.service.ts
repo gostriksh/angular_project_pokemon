@@ -3,9 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Pokemon} from '../models/Pokemon';
+import {IPokemon} from '../interfaces/IPokemon';
 
 @Injectable()
 export class PokemonService {
+
+    public  pokemonFront: IPokemon;
+    public pokemonBack: IPokemon;
 
     constructor(private http: HttpClient) {
     }

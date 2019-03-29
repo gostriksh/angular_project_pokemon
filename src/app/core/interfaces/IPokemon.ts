@@ -1,5 +1,6 @@
 import {IStat} from './IStat';
 import {IRedirection} from './common/IRedirection';
+import {IAttack} from './IAttack';
 
 export interface IPokemon {
   name: string;
@@ -11,4 +12,5 @@ export interface IPokemon {
   isAttacking: boolean;
   damageArray: number[];
   moves: Array<IRedirection>;
+  attacks: Array<IAttack>;
 }

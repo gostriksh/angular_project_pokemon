@@ -1,30 +1,53 @@
 <div class="attack-selector">
 
-    <div class="front-pokemon">
+    <div class="selection-container">
         <div class="pokemon-attacks">
             <img src={{pokemonFront?.imgFront}} alt="Front pokemon">
             <h2 class="pokemon-titles">{{pokemonFront?.name}} attacks</h2>
-            <ul class="front-pokemon-attacks">
-                <li *ngFor="let frontAttack of pokemonFrontAttacks" (click)="onSelect(frontAttack.move.name)">
+            <div class="attacks-selected">
+                <p>Attack selected</p>
+                <ul>
+                    <li *ngFor="let attack of pokemonFrontAttacks">
+                        <span>{{attack.name}}</span>
+                    </li>
+                </ul>
+
+                <button [ngClass]="{'hidden': frontValidated}" (click)="onValidate(pokemonFront)">Validate</button>
+                <span [ngClass]="frontValidated ? '' : 'hidden'">Done !</span>
+            </div>
+            <ul class="attack-list">
+                <li *ngFor="let frontAttack of pokemonFront?.moves" (click)="onSelect(frontAttack.move, pokemonFront)">
                     <span class="attack">{{frontAttack.move.name}}</span>
                 </li>
             </ul>
         </div>
 
-        <div class="attacks-selected">
+    </div>
 
+    <button (click)="launchFight()" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Fight !</button>
+
+    <div class="selection-container">
+        <div class="pokemon-attacks">
+            <img src={{pokemonBack?.imgFront}} alt="Back pokemon">
+            <h2 class="pokemon-titles">{{pokemonBack?.name}} attacks</h2>
+            <div class="attacks-selected">
+                <p>Attack selected</p>
+                <ul>
+                    <li *ngFor="let attack of pokemonBackAttacks">
+                        <span>{{attack.name}}</span>
+                    </li>
+                </ul>
+                <button [ngClass]="{'hidden': backValidated}" (click)="onValidate(pokemonBack)">Validate</button>
+                <span [ngClass]="backValidated ? '' : 'hidden'">Done !</span>
+            </div>
+            <ul class="attack-list">
+                <li *ngFor="let backAttack of pokemonBack?.moves" (click)="onSelect(backAttack.move, pokemonBack)">
+                    <span class="attack">{{backAttack.move.name}}</span>
+                </li>
+            </ul>
         </div>
 
-
     </div>
 
-    <div class="pokemon-attacks">
-        <img src={{pokemonBack?.imgFront}} alt="Back pokemon">
-        <h2 class="pokemon-titles">{{pokemonBack?.name}} attacks</h2>
-        <ul class="front-pokemon-attacks">
-            <li *ngFor="let backAttack of pokemonBackAttacks" (click)="onSelect(backAttack.move.name)">
-                <span class="attack">{{backAttack.move.name}}</span>
-            </li>
-        </ul>
-    </div>
+
 </div>
