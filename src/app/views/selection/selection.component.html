@@ -2,82 +2,99 @@
 
 
     <div class="selection-container">
+        <h3>Pokemon front </h3>
         <div class="pokemon-search">
             <form [formGroup]="front" (ngSubmit)="onFrontSubmit()">
-                <label>
-                    Pokemon front
-                    <input type="text" formControlName="frontInput">
-                </label>
-                <input type="submit" value="Select">
+                <input type="text" formControlName="frontInput">
+                <input class='button' type="submit" value="Search">
             </form>
 
             <span class="error">{{frontErrorMessage}}</span>
         </div>
 
-        <div class="pokemon-attacks" [ngClass]="pokemonFront ?'' :'hidden'">
+        <div class="pokemon-attacks" [ngClass]="pokemonFront ?'' :'collapse'">
             <img src={{pokemonFront?.imgFront}} alt="Not selected">
-            <h2 class="pokemon-titles">{{pokemonFront?.name}} attacks</h2>
+            <h2 class="pokemon-titles">{{pokemonFront?.name}}</h2>
             <div class="attacks-selected">
                 <p>Attack selected</p>
                 <ul>
                     <li *ngFor="let attack of pokemonFront?.attacks">
-                        <span>{{attack.name}}</span>
+                        <span (click)="removeAttack(pokemonFront, attack)">{{attack.name}}</span>
                     </li>
                 </ul>
-
-                <button [ngClass]="{'hidden': frontValidated}" (click)="onValidate(pokemonFront)">Validate</button>
-                <span [ngClass]="frontValidated ? '' : 'hidden'">Done !</span>
             </div>
-            <ul class="attack-list">
-                <li *ngFor="let frontAttack of pokemonFront?.allAttacks" (click)="onSelect(frontAttack, pokemonFront)">
-                    <span class="attack">{{frontAttack.name}}</span>
-                </li>
-            </ul>
+            <button class='validate-button' [ngClass]="{'collapse': frontValidated}" (click)="onValidate(pokemonFront)">
+                Validate
+            </button>
+            <button class='validate-button' [ngClass]="frontValidated ? '' : 'collapse'">Done !</button>
+
+            <div class="attack-list">
+                <p>Attack to select</p>
+                <ul class="attack-list">
+                    <li *ngFor="let frontAttack of pokemonFront?.allAttacks"
+                        (click)="onSelect(frontAttack, pokemonFront)">
+                        <span class="attack">{{frontAttack.name}}</span>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>
 
+    <div class="choice-container">
+        <button class='choice-button' (click)="launchFight('bvb')"
+                [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Bot vs Bot
+            fight !
+        </button>
 
-    <button (click)="launchFight('bvb')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Bot vs Bot
-        fight !
-    </button>
-
-    <button (click)="launchFight('pvp')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Player vs
-        Player fight !
-    </button>
+        <button class='choice-button' (click)="launchFight('pvp')"
+                [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Player vs
+            Player fight !
+        </button>
+    </div>
 
 
     <div class="selection-container">
+        <h3>Pokemon back</h3>
+
+
         <div class="pokemon-search">
             <form [formGroup]="back" (ngSubmit)="onBackSubmit()">
-                <label>
-                    Pokemon back
-                    <input type="text" formControlName="backInput">
-                </label>
-                <input type="submit" value="Select">
+                <input type="text" formControlName="backInput">
+                <input class='button' type="submit" value="Search">
             </form>
             <span class="error">{{backErrorMessage}}</span>
         </div>
-        <div class="pokemon-attacks" [ngClass]="pokemonBack ?'' :'hidden'">
+
+
+        <div class="pokemon-attacks" [ngClass]="pokemonBack ?'' :'collapse'">
             <img src={{pokemonBack?.imgFront}} alt="Not selected">
-            <h2 class="pokemon-titles">{{pokemonBack?.name}} attacks</h2>
+            <h2 class="pokemon-titles">{{pokemonBack?.name}}</h2>
+
             <div class="attacks-selected">
                 <p>Attack selected</p>
                 <ul>
                     <li *ngFor="let attack of pokemonBack?.attacks">
-                        <span>{{attack.name}}</span>
+                        <span (click)="removeAttack(pokemonBack, attack)">{{attack.name}}</span>
                     </li>
                 </ul>
-                <button [ngClass]="{'hidden': backValidated}" (click)="onValidate(pokemonBack)">Validate</button>
-                <span [ngClass]="backValidated ? '' : 'hidden'">Done !</span>
             </div>
-            <ul class="attack-list">
-                <li *ngFor="let backAttack of pokemonBack?.allAttacks" (click)="onSelect(backAttack, pokemonBack)">
-                    <span class="attack">{{backAttack.name}}</span>
-                </li>
-            </ul>
-        </div>
 
+            <button class='validate-button' [ngClass]="{'collapse': backValidated}" (click)="onValidate(pokemonBack)">
+                Validate
+            </button>
+            <button class='validate-button' [ngClass]="backValidated ? '' : 'collapse'">Done !</button>
+
+            <div class="attack-list">
+                <p>Attack to select</p>
+                <ul>
+                    <li *ngFor="let backAttack of pokemonBack?.allAttacks" (click)="onSelect(backAttack, pokemonBack)">
+                        <span class="attack">{{backAttack.name}}</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 
 

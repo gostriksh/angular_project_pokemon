@@ -1,6 +1,7 @@
 .attack-selector
   width: 100%
   display: flex
+  flex-direction: row
   justify-content: space-around
 
 .pokemon-titles
@@ -13,16 +14,21 @@
 
 .selection-container
   display: flex
-  justify-content: space-around
+  justify-content: flex-start
+  flex-direction: column
 
 .attacks-selected
   display: flex
-  align-items: center
   flex-direction: column
+  padding: 5px
+  text-align: center
   width: 200px
   height: 200px
   background: whitesmoke
-  border: 1px solid black
+  border-radius: 10px 10px 0 0
+
+.collapse
+  visibility: collapse
 
 .hidden
   visibility: hidden
@@ -31,12 +37,21 @@
   visibility: visible
 
 .attack-list
+  display: flex
+  flex-direction: column
+  text-align: center
+  padding: 10px 5px 10px 5px
   overflow: auto
   height: 200px
-  width: 160px
+  overflow-x: hidden
+  margin-top: 5px
+  width: 200px
   background: whitesmoke
+  border-radius: 10px
 
 .error
+  margin: 10px
+  text-align: center
   color: darkred
   font-weight: bold
 
@@ -44,8 +59,104 @@
   display: flex
   flex-direction: column
 
-p
-  text-align: center
+img
+  margin-top: 20px
+
+li
+  color: grey
   font-weight: bold
+
+h3
+  text-align: center
+  color: #132423
+  text-transform: uppercase
+
+ul
+  padding: 0
+  list-style-type: none
+
+.validate-button
+  height: 40px
+  width: 210px
+  align-content: center
+  border-radius: 0 0 5px 5px
+  padding: 10px 20px
+  background-color: #4CAF50
+  border: none
+  color: white
+  text-align: center
+  vertical-align: center
+  text-decoration: none
+  font-size: 16px
+
+.choice-button
+  height: 60px
+  align-content: center
+  width: auto
+  margin: 5px
+  border-radius: 10px
+  padding: 10px 20px
+  background-color: #4CAF50
+  border: none
+  color: white
+  text-align: center
+  text-decoration: none
+  font-size: 16px
+
+.button
+  height: 60px
+  align-content: center
+  width: auto
+  border-radius: 0 5px 5px 0
+  padding: 10px 20px
+  background-color: #4CAF50
+  border: none
+  color: white
+  text-align: center
+  text-decoration: none
+  font-size: 16px
+
+.done
+  height: 40px
+  width: 210px
+  align-content: center
+  border-radius: 0 0 5px 5px
+  padding: 10px 20px
+  background-color: #4CAF50
+  border: none
+  color: white
+  text-align: center
+  vertical-align: center
+  text-decoration: none
+  font-size: 16px
+
+input
+  height: 50px
+  width: auto
+  padding: 5px
+  text-decoration: none
+  border: none
+  font-size: 16px
+  border-radius: 5px 0 0 5px
+
+label
+  color: #4CAF50
+  font-size: 16px
+
+p
+  margin: 0
+  padding: 5px
+  border-bottom: 1px solid black
+  color: #132423
+  font-weight: bold
+  font-size: 16px
+
+.choice-container
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+
 
 

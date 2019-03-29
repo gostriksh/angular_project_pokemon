@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {first, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {forkJoin, Observable, throwError} from 'rxjs';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {Router} from '@angular/router';
@@ -20,7 +20,8 @@ export class SelectionComponent implements OnInit {
                 private router: Router) {
     }
 
-    ERROR_MESSAGE = 'This pokemon does not exist !';
+    ERROR_MESSAGE_POKEMON_NOT_FOUND = 'This pokemon does not exist !';
+    ERROR_MESSAGE_SHOULD_CHOOSE_ATTACKS = 'You must choose at least one attack';
 
     public front: FormGroup;
     public back: FormGroup;
@@ -49,18 +50,27 @@ export class SelectionComponent implements OnInit {
         this.getPokemons(this.back.value.backInput, this.back);
     }
 
+    public removeAttack(pokemon: IPokemon, attack: IAttack) {
+        pokemon.attacks = pokemon.attacks.filter(val => {
+            console.log(val);
+            return val !== attack;
+        });
+    }
+
     public getPokemons(value, form) {
+        if (value.length <= 0) {
+            return;
+        }
+
         this.fetchPokemons(value.toLowerCase())
             .pipe(
-                catchError((error) => {
-                    return this.handlePokemonSearchError(form, error);
-                }),
-            )
-            .pipe(
-                first(p => {
+                tap(p => {
                     return this.handlePokemonSearchSuccess(form, p);
                 }),
-                finalize(() => this.getAllAttacks(form))
+                tap(() => this.getAllAttacks(form)),
+                catchError((error) => {
+                    return this.handlePokemonSearchError(form, error);
+                })
             )
             .subscribe();
     }
@@ -90,10 +100,10 @@ export class SelectionComponent implements OnInit {
     public handlePokemonSearchError(form: FromGroup, error: any): Observable<never> {
         if (form === this.front) {
             this.pokemonFront = undefined;
-            this.frontErrorMessage = this.ERROR_MESSAGE;
+            this.frontErrorMessage = this.ERROR_MESSAGE_POKEMON_NOT_FOUND;
         } else {
             this.pokemonBack = undefined;
-            this.backErrorMessage = this.ERROR_MESSAGE;
+            this.backErrorMessage = this.ERROR_MESSAGE_POKEMON_NOT_FOUND;
         }
 
         if (error.status === 404) {
@@ -116,9 +126,21 @@ export class SelectionComponent implements OnInit {
 
     public onValidate(pokemon: IPokemon) {
         if (pokemon === this.pokemonFront) {
-            this.frontValidated = true;
+            if (this.pokemonFront.attacks.length > 0) {
+                this.frontValidated = true;
+                this.frontErrorMessage = '';
+            } else {
+                this.frontValidated = false;
+                this.frontErrorMessage = this.ERROR_MESSAGE_SHOULD_CHOOSE_ATTACKS;
+            }
         } else {
-            this.backValidated = true;
+            if (this.pokemonBack.attacks.length > 0) {
+                this.backValidated = true;
+                this.backErrorMessage = '';
+            } else {
+                this.backValidated = false;
+                this.backErrorMessage = this.ERROR_MESSAGE_SHOULD_CHOOSE_ATTACKS;
+            }
         }
     }
 
