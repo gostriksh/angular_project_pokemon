@@ -7,6 +7,7 @@ import {IPokemon} from '../../core/interfaces/IPokemon';
 import {catchError} from 'rxjs/internal/operators';
 import {IAttack} from '../../core/interfaces/IAttack';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AttackService} from '../../core/services/attack.service';
 
 @Component({
     selector: 'app-attack-selection',
@@ -17,6 +18,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class SelectionComponent implements OnInit {
 
     constructor(private pokemonService: PokemonService,
+                private attackService: AttackService,
                 private router: Router) {
     }
 
@@ -160,7 +162,7 @@ export class SelectionComponent implements OnInit {
     private fetchAttacks(pokemon: IPokemon): Observable<any> {
         const moves = pokemon.moves;
         const attackRequests = [];
-        moves.forEach(move => attackRequests.push(this.pokemonService.getAttackDetail(move.url)));
+        moves.forEach(move => attackRequests.push(this.attackService.getAttackDetail(move.url)));
 
         return forkJoin(attackRequests);
 

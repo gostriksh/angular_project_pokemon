@@ -2,9 +2,8 @@ import 'jest';
 import {TestBed, async} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {PokemonService} from './pokemon.service';
-import {catchError} from "rxjs/operators";
-import {of} from "rxjs";
-import {ɵHttpInterceptingHandler} from "@angular/common/http";
+import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 const pikachu = {
     abilities: [
