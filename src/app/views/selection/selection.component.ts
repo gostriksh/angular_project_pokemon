@@ -12,6 +12,7 @@ import {IAttack} from '../../core/interfaces/IAttack';
     templateUrl: './selection.component.html',
     styleUrls: ['./selection.component.sass']
 })
+
 export class SelectionComponent {
 
     constructor(private pokemonService: PokemonService,
