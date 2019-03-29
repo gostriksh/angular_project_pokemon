@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnChanges, OnInit} from '@angular/core';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {IPokemon} from '../../core/interfaces/IPokemon';
 import {concat, filter, first, subscribeOn, switchMap, takeUntil, takeWhile} from 'rxjs/operators';
@@ -108,6 +108,7 @@ export class RoundComponent implements OnInit {
             });
     }
 
+
     private attack(attacker: IPokemon, attacked: IPokemon) {
         if (attacked.stats.currentHealth <= 0) {
             return;
@@ -115,6 +116,7 @@ export class RoundComponent implements OnInit {
 
         const damage: number = attacker.stats.attack - attacked.stats.defense;
         const trueDamage: number = damage > 0 ? damage : 1;
+        attacked.damageArray = attacked.damageArray.concat(trueDamage);
         attacked.stats.currentHealth -= trueDamage;
 
         const value = `${attacker.name} attack ${attacked.name} and deal ${trueDamage}`;

@@ -36,6 +36,13 @@
   0%
     transform: translate(50px, -50px)
 
+@keyframes animation-damage
+  0%
+    opacity: 1
+  50%
+    opacity: 1
+  100%
+    opacity: 1
 
 #battle-div
   margin: auto
@@ -110,10 +117,30 @@
         position: absolute
         bottom: 0
     #pokemon-front
+      #damage-front
+        position: absolute
+        right: 50px
+        top: 20px
+        font-size: 25px
+        font-weight: bold
+        display: none
+        color: white
+      #damage-front.damage-pokemon
+        display: block
       img
         right: 50px
 
     #pokemon-back
+      #damage-back
+        color: white
+        position: absolute
+        left: 50px
+        top: 20px
+        font-size: 25px
+        font-weight: bold
+        display: none
+      #damage-back.damage-pokemon
+        display: block
       img
         left: 50px
 
@@ -136,5 +163,4 @@
 .animation-attacker-front
   animation-name: animation-attacker-front
   animation-duration: 0.5s
-
 

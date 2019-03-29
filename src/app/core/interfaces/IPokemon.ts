@@ -9,5 +9,6 @@ export interface IPokemon {
   img: string;
   isAttacked: boolean;
   isAttacking: boolean;
+  damageArray: number[];
   moves: Array<IRedirection>;
 }

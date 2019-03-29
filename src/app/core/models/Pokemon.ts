@@ -11,6 +11,7 @@ export class Pokemon implements IPokemon {
     public img: string;
     public isAttacked: boolean;
     public isAttacking: boolean;
+    public damageArray: number[];
     public moves: Array<IRedirection>;
 
     constructor(name, stats, imgFront, imgBack, img, moves) {
@@ -22,6 +23,7 @@ export class Pokemon implements IPokemon {
         this.img = img;
         this.isAttacked = false;
         this.isAttacking = false;
+        this.damageArray = [];
     }
 
     static factoryFromData(data: any): Pokemon {

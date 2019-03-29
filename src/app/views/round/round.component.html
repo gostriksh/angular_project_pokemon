@@ -12,6 +12,7 @@
               <div class="health-bar" appHealthBar currentHealth="{{pokemonFront.stats.currentHealth}}" totalHealth="{{pokemonFront.stats.totalHealth}}"></div>
           </div>
         </div>
+          <p id="damage-front" [appDisplayDamage]="pokemonFront.damageArray"></p>
         <img [ngClass]="{'is-dead': pokemonFront?.stats.currentHealth <= 0,
             'animation-attacked': pokemonFront?.isAttacked === true,
             'animation-attacker-front': pokemonFront?.isAttacking === true}"
@@ -27,6 +28,7 @@
                   <div class="health-bar" appHealthBar currentHealth="{{pokemonBack.stats.currentHealth}}" totalHealth="{{pokemonBack.stats.totalHealth}}"></div>
               </div>
           </div>
+          <p id="damage-back" [appDisplayDamage]="pokemonBack.damageArray"></p>
         <img [ngClass]="{'is-dead': pokemonBack?.stats.currentHealth <= 0,
             'animation-attacked': pokemonBack?.isAttacked === true,
             'animation-attacker-back': pokemonBack?.isAttacking === true}"
