@@ -12,6 +12,7 @@ import { ScrollFocusBottomDirective } from './core/directive/scroll-focus-bottom
 import {SelectionComponent} from './views/selection/selection.component';
 import { HealthBarDirective } from './core/directive/health-bar.directive';
 import { DisplayDamageDirective } from './core/directive/display-damage.directive';
+import { BackgroundPokemonColorDirective } from './core/directive/background-pokemon-color.directive';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { DisplayDamageDirective } from './core/directive/display-damage.directiv
         ScrollFocusBottomDirective,
         HealthBarDirective,
         DisplayDamageDirective,
+        BackgroundPokemonColorDirective,
     ],
     imports: [
         BrowserModule,
