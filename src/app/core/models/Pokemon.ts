@@ -3,6 +3,7 @@ import {IPokemon} from '../interfaces/IPokemon';
 import {Stat} from './Stat';
 import {IRedirection} from '../interfaces/common/IRedirection';
 import {IAttack} from '../interfaces/IAttack';
+import {Redirection} from './common/Redirection';
 
 export class Pokemon implements IPokemon {
     public name: string;
@@ -40,6 +41,7 @@ export class Pokemon implements IPokemon {
         const img = data.sprites.front_default;
         const imgFront = `https://play.pokemonshowdown.com/sprites/xyani/${data.name}.gif`;
         const imgBack = `https://play.pokemonshowdown.com/sprites/xyani-back/${data.name}.gif`;
+        const moves = data.moves.map(m => new Redirection(m.move.name, m.move.url));
 
         const stat = new Stat(
             speedStat ? speedStat.base_stat : 0,
@@ -48,7 +50,7 @@ export class Pokemon implements IPokemon {
             healthStat ? healthStat.base_stat : 0
         );
 
-        return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves, [], []);
+        return new Pokemon(data.name, stat, imgFront, imgBack, img, moves, [], []);
     }
 
     public setColor(color: string): void {

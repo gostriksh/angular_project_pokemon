@@ -4,7 +4,7 @@ import {forkJoin, Observable, throwError} from 'rxjs';
 import {PokemonService} from '../../core/services/pokemon.service';
 import {Router} from '@angular/router';
 import {IPokemon} from '../../core/interfaces/IPokemon';
-import {catchError, finalize} from 'rxjs/internal/operators';
+import {catchError} from 'rxjs/internal/operators';
 import {IAttack} from '../../core/interfaces/IAttack';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -75,7 +75,7 @@ export class SelectionComponent implements OnInit {
             .subscribe();
     }
 
-    public getAllAttacks(form: FromGroup) {
+    public getAllAttacks(form) {
         const pokemon = form === this.front ? this.pokemonFront : this.pokemonBack;
         this.fetchAttacks(pokemon)
             .pipe(
@@ -86,7 +86,7 @@ export class SelectionComponent implements OnInit {
             .subscribe();
     }
 
-    public handlePokemonSearchSuccess(form: FromGroup, pokemon: IPokemon): boolean {
+    public handlePokemonSearchSuccess(form, pokemon: IPokemon): boolean {
         if (form === this.front) {
             this.pokemonFront = pokemon;
             this.frontErrorMessage = '';
@@ -97,7 +97,7 @@ export class SelectionComponent implements OnInit {
         return pokemon !== undefined;
     }
 
-    public handlePokemonSearchError(form: FromGroup, error: any): Observable<never> {
+    public handlePokemonSearchError(form, error: any): Observable<never> {
         if (form === this.front) {
             this.pokemonFront = undefined;
             this.frontErrorMessage = this.ERROR_MESSAGE_POKEMON_NOT_FOUND;
@@ -107,7 +107,7 @@ export class SelectionComponent implements OnInit {
         }
 
         if (error.status === 404) {
-            return throwError(this.ERROR_MESSAGE);
+            return throwError(this.ERROR_MESSAGE_POKEMON_NOT_FOUND);
         } else {
             return throwError(error);
         }
@@ -158,12 +158,9 @@ export class SelectionComponent implements OnInit {
     }
 
     private fetchAttacks(pokemon: IPokemon): Observable<any> {
-        const attacks = pokemon.moves;
+        const moves = pokemon.moves;
         const attackRequests = [];
-
-        for (const attack of attacks) {
-            attackRequests.push(this.pokemonService.getAttackDetail(attack.move.url));
-        }
+        moves.forEach(move => attackRequests.push(this.pokemonService.getAttackDetail(move.url)));
 
         return forkJoin(attackRequests);
 
