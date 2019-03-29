@@ -3,10 +3,16 @@
 
     <div class="selection-container">
         <div class="pokemon-search">
-            <label>
-                Pokemon front
-                <input id="front-input" type="text" (keydown.enter)="choosePokemon($event)">
-            </label>
+
+            <form>
+                <label>
+                    Pokemon front
+                    <input id="front-input" type="text" (keydown.enter)="choosePokemon($event)">
+                </label>
+                <input type="submit">
+            </form>
+
+
             <span class="error">{{frontErrorMessage}}</span>
         </div>
 
@@ -34,11 +40,13 @@
     </div>
 
 
-    <button (click)="launchFight('bvb')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Bot vs Bot fight !</button>
+    <button (click)="launchFight('bvb')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Bot vs Bot
+        fight !
+    </button>
 
-    <button (click)="launchFight('pvp')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Player vs Player fight !</button>
-
-
+    <button (click)="launchFight('pvp')" [ngClass]="frontValidated &&  backValidated ? 'ready' : 'hidden'">Player vs
+        Player fight !
+    </button>
 
 
     <div class="selection-container">
