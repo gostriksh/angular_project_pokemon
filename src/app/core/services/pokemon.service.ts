@@ -19,9 +19,4 @@ export class PokemonService {
             .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
             .pipe(map((data: any) => Pokemon.factoryFromData(data)));
     }
-
-    public getAttackDetail(uri: string): Observable<any> {
-        return this.http
-            .get(`${uri}`);
-    }
 }

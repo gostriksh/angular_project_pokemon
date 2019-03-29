@@ -1,9 +1,8 @@
 import 'jest';
 import {TestBed, async} from '@angular/core/testing';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {PokemonService} from './pokemon.service';
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs';
+import {HttpTestingController} from '@angular/common/http/testing';
+import {SelectionComponent} from './selection.component';
+import {By} from '@angular/platform-browser';
 
 const pikachu = {
     abilities: [
@@ -9710,68 +9709,18 @@ const pikachu = {
 describe('Test Pokemon Service', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [PokemonService]
+            declarations: [SelectionComponent]
         });
     });
 
     it('When we want to find a pokemon as an object', async(() => {
-        const pokemonService = TestBed.get(PokemonService);
-        const http = TestBed.get(HttpTestingController);
-        const mockPokemon = pikachu;
-
-        pokemonService.show('pikachu').subscribe(pokemon => expect(typeof pokemon).toBe('object'));
-
-        http.expectOne('https://pokeapi.co/api/v2/pokemon/pikachu').flush(mockPokemon);
-    }));
-
-    it('When we want to find a pokemon name as a string', async(() => {
-        const pokemonService = TestBed.get(PokemonService);
-        const http = TestBed.get(HttpTestingController);
-        const mockPokemon = pikachu;
-
-        pokemonService.show('pikachu').subscribe(pokemon => expect(pokemon.name).toBe('pikachu'));
-
-        http.expectOne('https://pokeapi.co/api/v2/pokemon/pikachu').flush(mockPokemon);
-    }));
-
-    it('When we want to find a pokemon stats as an object', async(() => {
-        const pokemonService = TestBed.get(PokemonService);
-        const http = TestBed.get(HttpTestingController);
-        const mockPokemon = pikachu;
-
-        pokemonService.show('pikachu').subscribe(pokemon => expect(typeof pokemon.stats).toBe('object'));
-
-        http.expectOne('https://pokeapi.co/api/v2/pokemon/pikachu').flush(mockPokemon);
-    }));
-
-    it('When we want to find a pokemon with a invalid name', async(() => {
-        const pokemonService = TestBed.get(PokemonService);
-        const http = TestBed.get(HttpTestingController);
-        const statusCode = 404;
-
-        pokemonService.show('azertyuiop').pipe(
-            catchError(httpError => {
-                expect(httpError.error).toBe(404);
-                return of(httpError);
-            })
-        ).subscribe();
-
-        http.expectOne('https://pokeapi.co/api/v2/pokemon/azertyuiop').error(statusCode);
-    }));
-
-    it('When we want to find a pokemon with an empty name', async(() => {
-        const pokemonService = TestBed.get(PokemonService);
-        const http = TestBed.get(HttpTestingController);
-        const statusCode = 404;
-
-        pokemonService.show('').pipe(
-            catchError(httpError => {
-                expect(httpError.error).toBe(404);
-                return of(httpError);
-            })
-        ).subscribe();
-
-        http.expectOne('https://pokeapi.co/api/v2/pokemon/').error(statusCode);
+        // const fixture = TestBed.createComponent(SelectionComponent);
+        // const component = fixture.componentInstance;
+        //
+        // component.ngOnInit();
+        //
+        // const pokemonFrontInput = fixture.debugElement.query(By.css('pokemon-search'));
+        //
+        // console.log(pokemonFrontInput);
     }));
 });
