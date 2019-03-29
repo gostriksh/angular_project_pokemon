@@ -36,6 +36,13 @@
   0%
     transform: translate(50px, -50px)
 
+@keyframes animation-damage
+  0%
+    opacity: 1
+  50%
+    opacity: 1
+  100%
+    opacity: 1
 
 #battle-div
   margin: auto
@@ -110,19 +117,42 @@
         position: absolute
         bottom: 0
     #pokemon-front
+      #damage-front
+        position: absolute
+        right: 50px
+        top: 20px
+        font-size: 25px
+        font-weight: bold
+        display: none
+        color: white
+      #damage-front.damage-pokemon
+        display: block
       img
         right: 50px
 
     #pokemon-back
+      #damage-back
+        color: white
+        position: absolute
+        left: 50px
+        top: 20px
+        font-size: 25px
+        font-weight: bold
+        display: none
+      #damage-back.damage-pokemon
+        display: block
       img
         left: 50px
 
 #log-div
-  margin: 30px auto
+  margin: 15px auto
   width: 650px
   height: 200px
   overflow: scroll
   overflow-x: hidden
+  border: 1px solid black
+  .log-messages
+    margin: 15px
 #pause
   display: block
   margin: auto
@@ -137,4 +167,29 @@
   animation-name: animation-attacker-front
   animation-duration: 0.5s
 
+.bold
+  font-weight: bold
 
+.attack-lists
+  margin: 15px auto
+  width: 650px
+  height: 150px
+  .attack-pokemon-name
+    font-weight: bold
+    font-size: 17px
+    text-align: center
+  .attack-names
+    margin: 0
+    text-align: center
+  #attack-list-back
+    height: 100%
+    width: 310px
+    float: left
+    border: 1px solid black
+    border-radius: 10px
+  #attack-list-front
+    height: 100%
+    width: 310px
+    float: right
+    border: 1px solid black
+    border-radius: 15px

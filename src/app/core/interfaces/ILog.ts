@@ -1,6 +1,9 @@
 import {IPokemon} from './IPokemon';
+import {IAttack} from './IAttack';
 
 export interface ILog {
-    value: string;
-    pokemon: IPokemon;
+    damage: number;
+    pokemonAttacker: IPokemon;
+    pokemonAttacked: IPokemon;
+    attack: IAttack;
 }

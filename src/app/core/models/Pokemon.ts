@@ -12,9 +12,11 @@ export class Pokemon implements IPokemon {
     public img: string;
     public isAttacked: boolean;
     public isAttacking: boolean;
+    public damageArray: number[];
     public moves: Array<IRedirection>;
     public allAttacks: Array<IAttack>;
     public attacks: Array<IAttack>;
+    public color: string;
 
     constructor(name, stats, imgFront, imgBack, img, moves, allAttacks, attacks) {
         this.name = name;
@@ -27,6 +29,7 @@ export class Pokemon implements IPokemon {
         this.img = img;
         this.isAttacked = false;
         this.isAttacking = false;
+        this.damageArray = [];
     }
 
     static factoryFromData(data: any): Pokemon {
@@ -46,5 +49,9 @@ export class Pokemon implements IPokemon {
         );
 
         return new Pokemon(data.name, stat, imgFront, imgBack, img, data.moves, [], []);
+    }
+
+    public setColor(color: string): void {
+        this.color = color;
     }
 }

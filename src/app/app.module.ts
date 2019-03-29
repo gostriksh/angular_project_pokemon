@@ -11,6 +11,7 @@ import { AttackColorDirective } from './core/directive/attack-color.directive';
 import { ScrollFocusBottomDirective } from './core/directive/scroll-focus-bottom.directive';
 import {SelectionComponent} from './views/selection/selection.component';
 import { HealthBarDirective } from './core/directive/health-bar.directive';
+import { DisplayDamageDirective } from './core/directive/display-damage.directive';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { HealthBarDirective } from './core/directive/health-bar.directive';
         AttackColorDirective,
         ScrollFocusBottomDirective,
         HealthBarDirective,
+        DisplayDamageDirective,
     ],
     imports: [
         BrowserModule,

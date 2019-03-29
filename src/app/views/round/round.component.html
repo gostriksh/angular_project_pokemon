@@ -1,7 +1,7 @@
 <div id="battle-div" *ngIf="pokemonFront && pokemonBack">
 
   <div id="ground">
-    <p id="win-msg"*ngIf="winner" [appPokemonColor]="winner === pokemonFront ? pokemonFrontColor : pokemonBackColor">
+    <p id="win-msg"*ngIf="winner" [appPokemonColor]="winner.color">
       {{winner?.name}} win !!!
     </p>
     <div class="pokemon-div" id="pokemon-front">
@@ -12,6 +12,7 @@
               <div class="health-bar" appHealthBar currentHealth="{{pokemonFront.stats.currentHealth}}" totalHealth="{{pokemonFront.stats.totalHealth}}"></div>
           </div>
         </div>
+          <p id="damage-front" [appDisplayDamage]="pokemonFront.damageArray"></p>
         <img [ngClass]="{'is-dead': pokemonFront?.stats.currentHealth <= 0,
             'animation-attacked': pokemonFront?.isAttacked === true,
             'animation-attacker-front': pokemonFront?.isAttacking === true}"
@@ -27,6 +28,7 @@
                   <div class="health-bar" appHealthBar currentHealth="{{pokemonBack.stats.currentHealth}}" totalHealth="{{pokemonBack.stats.totalHealth}}"></div>
               </div>
           </div>
+          <p id="damage-back" [appDisplayDamage]="pokemonBack.damageArray"></p>
         <img [ngClass]="{'is-dead': pokemonBack?.stats.currentHealth <= 0,
             'animation-attacked': pokemonBack?.isAttacked === true,
             'animation-attacker-back': pokemonBack?.isAttacking === true}"
@@ -36,12 +38,33 @@
     </div>
   </div>
 </div>
+<div class="attack-lists">
+    <div id="attack-list-back">
+        <p [appPokemonColor]="pokemonBack.color" class="attack-pokemon-name">{{pokemonBack.name}}</p>
+        <p class="attack-names" *ngFor="let attack of pokemonBack.attacks" (click)="processAttack(pokemonBack, pokemonFront, attack)">
+            {{attack.name}}
+        </p>
+    </div>
+    <div id="attack-list-front">
+        <p [appPokemonColor]="pokemonFront.color" class="attack-pokemon-name">{{pokemonFront.name}}</p>
+        <p class="attack-names" *ngFor="let attack of pokemonFront.attacks" (click)="processAttack(pokemonFront, pokemonBack, attack)">
+            {{attack.name}}
+        </p>
+    </div>
+</div>
+
 <div id="log-div" appScrollFocusBottom>
-  <p>The fight started on {{ startDate | date:'medium' }}</p>
-  <p *ngFor="let log of logs" [appPokemonColor]="log.pokemon === pokemonFront ? pokemonFrontColor : pokemonBackColor">
-    {{log.value}}
+  <p class="log-messages">The fight started on {{ startDate | date:'medium' }}</p>
+  <p class="log-messages" *ngFor="let log of logs">
+    <span class="bold" [appPokemonColor]="log.pokemonAttacker.color">{{log.pokemonAttacker.name}}</span>
+    use
+    <span class="bold" [appPokemonColor]="log.pokemonAttacker.color"> {{log.attack.name}}</span>
+     on
+    <span class="bold" [appPokemonColor]="log.pokemonAttacked.color">{{log.pokemonAttacked.name}}</span>
+    and deals
+    <span class="bold" [appPokemonColor]="log.pokemonAttacker.color">{{log.damage}}</span>
   </p>
 </div>
 <button id="pause" (click)="setPause()">{{pause ? 'Resume' : 'Pause'}}</button>
 
-
+s
