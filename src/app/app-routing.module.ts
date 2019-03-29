@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {RoundComponent} from './views/round/round.component';
 import {SelectionComponent} from './views/selection/selection.component';
+import {RoundPageGuard} from './core/guards/-round-page.guard';
 
 const routes: Routes = [
     {
@@ -10,7 +11,8 @@ const routes: Routes = [
     },
     {
         path: 'round/:choice',
-        component: RoundComponent
+        component: RoundComponent,
+        canActivate: [RoundPageGuard]
     }
 ];
 
