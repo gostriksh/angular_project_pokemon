@@ -1,7 +1,7 @@
 <div id="battle-div" *ngIf="pokemonFront && pokemonBack">
 
   <div id="ground">
-    <p id="win-msg"*ngIf="winner" [appPokemonColor]="winner.color">
+    <p id="win-msg"*ngIf="winner" [appPokemonColor]="winner?.color">
       {{winner?.name}} win !!!
     </p>
     <div class="pokemon-div" id="pokemon-front">
@@ -38,16 +38,16 @@
     </div>
   </div>
 </div>
-<div class="attack-lists">
+<div *ngIf="choice === 'pvp'" class="attack-lists">
     <div id="attack-list-back">
-        <p [appPokemonColor]="pokemonBack.color" class="attack-pokemon-name">{{pokemonBack.name}}</p>
-        <p class="attack-names" *ngFor="let attack of pokemonBack.attacks" (click)="processAttack(pokemonBack, pokemonFront, attack)">
+        <p [appPokemonColor]="pokemonBack?.color" class="attack-pokemon-name">{{pokemonBack?.name}}</p>
+        <p class="attack-names" *ngFor="let attack of pokemonBack?.attacks" (click)="pokemonBack.isAttacking === false && processAttack(pokemonBack, pokemonFront, attack)">
             {{attack.name}}
         </p>
     </div>
     <div id="attack-list-front">
-        <p [appPokemonColor]="pokemonFront.color" class="attack-pokemon-name">{{pokemonFront.name}}</p>
-        <p class="attack-names" *ngFor="let attack of pokemonFront.attacks" (click)="processAttack(pokemonFront, pokemonBack, attack)">
+        <p [appPokemonColor]="pokemonFront?.color" class="attack-pokemon-name">{{pokemonFront?.name}}</p>
+        <p class="attack-names" *ngFor="let attack of pokemonFront?.attacks" (click)="pokemonFront.isAttacking === false && processAttack(pokemonFront, pokemonBack, attack)">
             {{attack.name}}
         </p>
     </div>
@@ -56,13 +56,13 @@
 <div id="log-div" appScrollFocusBottom>
   <p class="log-messages">The fight started on {{ startDate | date:'medium' }}</p>
   <p class="log-messages" *ngFor="let log of logs">
-    <span class="bold" [appPokemonColor]="log.pokemonAttacker.color">{{log.pokemonAttacker.name}}</span>
+    <span class="bold" [appPokemonColor]="log?.pokemonAttacker.color">{{log.pokemonAttacker.name}}</span>
     use
-    <span class="bold" [appPokemonColor]="log.pokemonAttacker.color"> {{log.attack.name}}</span>
+    <span class="bold" [appPokemonColor]="log?.pokemonAttacker.color"> {{log.attack.name}}</span>
      on
-    <span class="bold" [appPokemonColor]="log.pokemonAttacked.color">{{log.pokemonAttacked.name}}</span>
+    <span class="bold" [appPokemonColor]="log?.pokemonAttacked.color">{{log.pokemonAttacked.name}}</span>
     and deals
-    <span class="bold" [appPokemonColor]="log.pokemonAttacker.color">{{log.damage}}</span>
+    <span class="bold" [appPokemonColor]="log?.pokemonAttacker.color">{{log.damage}}</span>
   </p>
 </div>
 <button id="pause" (click)="setPause()">{{pause ? 'Resume' : 'Pause'}}</button>
